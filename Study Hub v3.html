@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Study Hub — Wirtschaftsinformatik</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230e0e12'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%232a2a35' stroke-width='3'/%3E%3Cpath d='M16 7a9 9 0 0 1 9 9' fill='none' stroke='%236B6EF9' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%236B6EF9'/%3E%3C/svg%3E">
 <style>
   :root {
     --bg: #0e0e12;
@@ -254,6 +255,31 @@
   .progress-track { height: 6px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); overflow: hidden; margin-top: 0.75rem; }
   .progress-fill { height: 100%; background: var(--accent); transition: width 1s ease; }
   .progress-meta { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); margin-top: 0.5rem; }
+
+  /* ---------- Fokus-Timer (rundes Zifferblatt im Rechteck) ---------- */
+  .pomo-card { display: flex; flex-direction: column; align-items: stretch; }
+  .pomo-dial { position: relative; width: 168px; height: 168px; margin: 0.85rem auto 0.35rem; }
+  .pomo-dial svg { display: block; width: 168px; height: 168px; }
+  .pomo-ring { transform: rotate(-90deg); transform-origin: 84px 84px; transition: stroke-dashoffset 0.5s linear, stroke 300ms; }
+  .pomo-dial-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.05rem; }
+  .pomo-dial .pomo-time { font-size: 2rem; }
+  .pomo-dial .pomo-phase { margin: 0; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.7rem; }
+  .pomo-card .pomo-actions { justify-content: center; }
+  @media (prefers-reduced-motion: reduce) { .pomo-ring { transition: none; } }
+
+  /* ---------- Semesterfortschritt mit Terminen auf dem Weg ---------- */
+  .semester-card { margin-top: 1rem; }
+  .sem-track-wrap { padding: 1.85rem 0.6rem 0.5rem; }
+  .sem-track { position: relative; height: 10px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); }
+  .sem-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #8d8fff); border-radius: 999px; transition: width 1s ease; }
+  .sem-today { position: absolute; top: 50%; width: 2px; height: 24px; margin-top: -12px; transform: translateX(-50%); background: var(--text); border-radius: 2px; }
+  .sem-today-flag { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 4px; font-family: var(--mono); font-size: 0.62rem; color: var(--text); white-space: nowrap; }
+  .sem-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); }
+  .sem-marker-dot { display: block; width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--border); cursor: default; }
+  .sem-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; margin-top: 0.5rem; }
+  .sem-chip { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--text); }
+  .sem-chip-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .sem-chip-date { color: var(--muted); font-family: var(--mono); font-size: 0.7rem; }
 
   /* ---------- Exams ---------- */
   .exam-list { display: flex; flex-direction: column; gap: 1rem; }
@@ -961,6 +987,7 @@ function startTyping() {
 
 /* ============ Pomodoro focus timer ============ */
 const POMO_MIN = { focus: 25, break: 5 };
+const POMO_CIRC = 2 * Math.PI * 54;
 let pomo = load("pomo", { phase: "focus", running: false, endsAt: null, remaining: 25 * 60 });
 function pomoSave() { save("pomo", pomo); }
 function pomoRemaining() {
@@ -1040,6 +1067,12 @@ setInterval(function () {
   const rem = pomoRemaining();
   const el = document.getElementById("pomoTime");
   if (el) { el.textContent = pomoFmt(rem); }
+  const ring = document.getElementById("pomoRing");
+  if (ring) {
+    const total = POMO_MIN[pomo.phase] * 60;
+    const frac = Math.min(1, Math.max(0, rem / total));
+    ring.setAttribute("stroke-dashoffset", (POMO_CIRC * (1 - frac)).toFixed(2));
+  }
   if (pomo.running) {
     document.title = "⏱ " + pomoFmt(rem) + " · Study Hub";
     if (rem <= 0) {
@@ -1092,8 +1125,9 @@ function viewDashboard() {
   /* Feed + Fokus-Timer + Semesterfortschritt */
   html += '<div class="dash-grid">' +
     '<div class="card">' + feedHTML() + "</div>" +
-    '<div class="dash-col">' + pomoHTML() + semesterHTML(upcoming) + "</div>" +
+    '<div class="dash-col">' + pomoHTML() + "</div>" +
     "</div>";
+  html += semesterHTML(upcoming);
 
   html += '<div class="quick-add">' +
     '<input type="text" id="quickAddInput" placeholder="Schnell ein To-Do hinzufügen …" onkeydown="if(event.key===\'Enter\')quickAdd()">' +
@@ -1131,11 +1165,25 @@ function feedHTML() {
 
 function pomoHTML() {
   const isBreak = pomo.phase === "break";
-  return '<div class="card">' +
+  const total = POMO_MIN[pomo.phase] * 60;
+  const rem = pomoRemaining();
+  const frac = Math.min(1, Math.max(0, rem / total));
+  const offset = POMO_CIRC * (1 - frac);
+  const ringColor = isBreak ? "var(--green)" : "var(--accent)";
+  return '<div class="card pomo-card">' +
     '<div class="card-h"><span>Fokus-Timer</span>' +
     '<button class="btn ghost" onclick="pomoSwitchPhase()">' + (isBreak ? "→ Fokus" : "→ Pause") + "</button></div>" +
-    '<div class="pomo-phase">' + (isBreak ? "Pause — kurz durchatmen" : "Fokus — 25 Minuten dranbleiben") + "</div>" +
-    '<div class="pomo-time' + (isBreak ? " break" : "") + '" id="pomoTime">' + pomoFmt(pomoRemaining()) + "</div>" +
+    '<div class="pomo-dial">' +
+    '<svg viewBox="0 0 168 168" aria-hidden="true">' +
+    '<circle cx="84" cy="84" r="54" fill="none" stroke="var(--border)" stroke-width="8"></circle>' +
+    '<circle id="pomoRing" class="pomo-ring" cx="84" cy="84" r="54" fill="none" stroke="' + ringColor +
+    '" stroke-width="8" stroke-linecap="round" stroke-dasharray="' + POMO_CIRC.toFixed(2) +
+    '" stroke-dashoffset="' + offset.toFixed(2) + '"></circle>' +
+    "</svg>" +
+    '<div class="pomo-dial-center">' +
+    '<div class="pomo-time' + (isBreak ? " break" : "") + '" id="pomoTime">' + pomoFmt(rem) + "</div>" +
+    '<div class="pomo-phase">' + (isBreak ? "Pause" : "Fokus") + "</div>" +
+    "</div></div>" +
     '<div class="pomo-actions">' +
     '<button class="btn primary" onclick="pomoToggle()">' + (pomo.running ? "Pause" : "Start") + "</button>" +
     '<button class="btn" onclick="pomoReset()">Zurücksetzen</button>' +
@@ -1148,12 +1196,36 @@ function semesterHTML(upcoming) {
   const start = startOfDay(new Date(SEMESTER_START + "T12:00:00"));
   const end = startOfDay(new Date(last.date + "T12:00:00"));
   const today = startOfDay(new Date());
-  const pct = Math.min(100, Math.max(0, Math.round((today - start) / (end - start) * 100)));
+  const span = Math.max(1, end - start);
+  const pct = Math.min(100, Math.max(0, Math.round((today - start) / span * 100)));
   const rest = daysUntil(last.date);
-  return '<div class="card">' +
-    '<div class="card-h"><span>Semesterfortschritt</span></div>' +
-    '<div class="progress-track"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
-    '<div class="progress-meta"><span>' + pct + " %</span><span>noch " + rest + " Tage bis zur letzten Prüfung</span></div></div>";
+
+  const markers = upcoming.map(function (e) {
+    const d = startOfDay(new Date(e.date + "T12:00:00"));
+    const pos = Math.min(100, Math.max(0, (d - start) / span * 100));
+    const c = SUBJECT_COLORS[e.subject] || "var(--accent)";
+    return '<div class="sem-marker" style="left:' + pos.toFixed(2) + '%;">' +
+      '<span class="sem-marker-dot" style="background:' + c + ';" title="' +
+      esc(e.subject) + " · " + esc(fmtDate(e.date)) + '"></span></div>';
+  }).join("");
+
+  const legend = upcoming.map(function (e) {
+    const c = SUBJECT_COLORS[e.subject] || "var(--accent)";
+    const days = daysUntil(e.date);
+    const when = days === 0 ? "heute" : days === 1 ? "morgen" : "in " + days + " T";
+    return '<span class="sem-chip"><span class="sem-chip-dot" style="background:' + c + ';"></span>' +
+      esc(e.subject) + ' <span class="sem-chip-date">' + fmtDateShort(e.date) + " · " + when + "</span></span>";
+  }).join("");
+
+  return '<div class="card semester-card">' +
+    '<div class="card-h"><span>Semesterfortschritt</span>' +
+    '<span style="color:var(--muted); font-family:var(--mono); font-size:0.72rem; text-transform:none; letter-spacing:0;">' +
+    pct + " % · noch " + rest + " Tage</span></div>" +
+    '<div class="sem-track-wrap"><div class="sem-track">' +
+    '<div class="sem-fill" style="width:' + pct + '%;"></div>' +
+    '<div class="sem-today" style="left:' + pct + '%;" title="Heute"><span class="sem-today-flag">Heute</span></div>' +
+    markers + "</div></div>" +
+    '<div class="sem-legend">' + legend + "</div></div>";
 }
 
 function viewExams() {
