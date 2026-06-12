@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================================
+ * BASIS
+ * ===================================================================== */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-void font-body text-ink-hi;
+    /* Atmosphäre: zwei sehr weiche radiale Neon-Glows in den Ecken.
+       Bewusst dezent (< 10 % Alpha), damit nichts kitschig wirkt. */
+    background-image:
+      radial-gradient(900px 540px at 88% -12%, rgba(167, 139, 250, 0.10), transparent 62%),
+      radial-gradient(820px 520px at -8% 28%, rgba(45, 217, 245, 0.08), transparent 58%),
+      radial-gradient(700px 480px at 55% 115%, rgba(74, 222, 128, 0.05), transparent 60%);
+    background-attachment: fixed;
+    min-height: 100dvh;
+  }
+
+  /* Feines Cyberpunk-Grid als fixe Hintergrund-Ebene.
+     Über eine Radial-Maske nach unten ausgeblendet → Tiefe statt Tapete. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 35%, transparent 100%);
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 35%, transparent 100%);
+  }
+
+  ::selection {
+    background: rgba(45, 217, 245, 0.30);
+    color: #eceef6;
+  }
+
+  /* Sichtbarer Tastatur-Fokus in Akzentfarbe (Accessibility-Grundausstattung) */
+  :focus-visible {
+    outline: 2px solid rgba(45, 217, 245, 0.7);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* Schlanke Custom-Scrollbar passend zum Dark Theme */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 99px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+}
+
+/* =====================================================================
+ * WIEDERVERWENDBARE KOMPONENTEN-KLASSEN
+ * ===================================================================== */
+@layer components {
+  /* Glassmorphismus: leicht transparentes, geblurrtes Panel mit Hairline */
+  .glass {
+    @apply border border-line bg-white/[0.045] backdrop-blur-xl;
+  }
+
+  /* Stärkere Glass-Variante für Overlays (Modals, Mobile-Nav) */
+  .glass-strong {
+    @apply border border-white/10 bg-[#0d0e18]/85 backdrop-blur-2xl;
+  }
+
+  /* Einheitlicher Look für Formularfelder */
+  .field {
+    @apply w-full rounded-xl border border-line bg-white/5 px-3.5 py-2.5 text-sm
+      text-ink-hi placeholder:text-ink-low outline-none transition-colors
+      focus:border-neon-cyan/60 focus:ring-2 focus:ring-neon-cyan/20;
+  }
+
+  .field-label {
+    @apply mb-1.5 block font-mono text-[11px] uppercase tracking-widest text-ink-low;
+  }
+
+  /* --- Rich-Text-Editor (Notizen) ------------------------------------ */
+  .rt-btn {
+    @apply rounded-lg p-1.5 text-ink-mid transition-colors hover:bg-white/10 hover:text-neon-violet;
+  }
+  .rt-select {
+    @apply rounded-lg border border-line bg-white/5 px-1.5 py-1 font-mono text-[11px] text-ink-mid outline-none [color-scheme:dark] focus:border-neon-violet/50;
+  }
+  .rt-divider {
+    @apply mx-1 h-5 w-px bg-line;
+  }
+  .rt-swatch {
+    @apply mx-0.5 h-4 w-4 rounded-full border border-white/25 transition-transform hover:scale-125;
+  }
+}
+
+/* =====================================================================
+ * FORMATIERTER NOTIZ-INHALT
+ * Editor (.rt-editor) und Lese-Ansicht teilen sich diese Regeln —
+ * Tailwinds Preflight entfernt Listen-Styles, hier kommen sie zurück.
+ * ===================================================================== */
+.rich-content p {
+  margin: 0 0 0.45em;
+}
+.rich-content ul {
+  list-style: disc;
+  margin: 0.3em 0 0.6em;
+  padding-left: 1.4em;
+}
+.rich-content ol {
+  list-style: decimal;
+  margin: 0.3em 0 0.6em;
+  padding-left: 1.4em;
+}
+.rich-content li {
+  margin: 0.15em 0;
+}
+.rich-content b,
+.rich-content strong {
+  color: #f4f6ff;
+}
+
+/* Platzhalter für die leere Schreibfläche */
+.rt-editor:empty::before {
+  content: attr(data-placeholder);
+  color: rgba(126, 132, 158, 0.8);
+  pointer-events: none;
+}
+
+/* =====================================================================
+ * REDUCED MOTION
+ * Framer Motion respektiert das via <MotionConfig reducedMotion="user">,
+ * hier zusätzlich die reinen CSS-Animationen abschalten.
+ * ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
