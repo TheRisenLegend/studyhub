@@ -219,8 +219,9 @@
   .ring-date { font-size: 0.78rem; color: var(--muted); }
 
   /* ---------- Dashboard grid ---------- */
-  .dash-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 1rem; margin-top: 1.5rem; align-items: start; }
+  .dash-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 1rem; margin-top: 1.5rem; align-items: stretch; }
   .dash-col { display: flex; flex-direction: column; gap: 1rem; }
+  .dash-col .pomo-card { flex: 1; }
   .feed-item {
     display: flex;
     align-items: center;
@@ -257,14 +258,15 @@
   .progress-meta { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); margin-top: 0.5rem; }
 
   /* ---------- Fokus-Timer (rundes Zifferblatt im Rechteck) ---------- */
-  .pomo-card { display: flex; flex-direction: column; align-items: stretch; }
-  .pomo-dial { position: relative; width: 168px; height: 168px; margin: 0.85rem auto 0.35rem; }
-  .pomo-dial svg { display: block; width: 168px; height: 168px; }
-  .pomo-ring { transform: rotate(-90deg); transform-origin: 84px 84px; transition: stroke-dashoffset 0.5s linear, stroke 300ms; }
-  .pomo-dial-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.05rem; }
-  .pomo-dial .pomo-time { font-size: 2rem; }
+  .pomo-card { display: flex; flex-direction: column; }
+  .pomo-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.4rem; padding: 0.5rem 0; }
+  .pomo-dial { position: relative; width: 190px; height: 190px; }
+  .pomo-dial svg { display: block; width: 190px; height: 190px; }
+  .pomo-ring { transform: rotate(-90deg); transform-origin: 95px 95px; transition: stroke-dashoffset 0.5s linear, stroke 300ms; }
+  .pomo-dial-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.1rem; }
+  .pomo-dial .pomo-time { font-size: 2.1rem; }
   .pomo-dial .pomo-phase { margin: 0; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.7rem; }
-  .pomo-card .pomo-actions { justify-content: center; }
+  .pomo-card .pomo-actions { justify-content: center; margin-top: 0; }
   @media (prefers-reduced-motion: reduce) { .pomo-ring { transition: none; } }
 
   /* ---------- Semesterfortschritt mit Terminen auf dem Weg ---------- */
@@ -731,7 +733,7 @@ if (localStorage.getItem("notes") === null) {
     title: "Relationales Modell",
     subject: "DIA",
     content: "<h2>Normalformen</h2><ul><li><b>1NF</b>: Atomare Attributwerte</li><li><b>2NF</b>: Keine partiellen Abhängigkeiten</li><li><b>3NF</b>: Keine transitiven Abhängigkeiten</li></ul>",
-    updatedAt: Date.now()
+    updatedAt: new Date("2026-05-10T14:30:00").getTime()
   }]);
 }
 if (localStorage.getItem("snippets") === null) {
@@ -742,7 +744,7 @@ if (localStorage.getItem("snippets") === null) {
     subject: "Prog2",
     description: "Wann welche Listen-Implementierung?",
     code: "// ArrayList: schneller Index-Zugriff O(1),\n// langsames Einfügen in der Mitte O(n)\nList<String> arrayList = new ArrayList<>();\n\n// LinkedList: schnelles Einfügen/Entfernen O(1)\n// am Anfang/Ende, langsamer Zugriff O(n)\nList<String> linkedList = new LinkedList<>();\n\n// Faustregel: fast immer ArrayList verwenden,\n// außer bei vielen Operationen an den Enden\n// -> dann ArrayDeque in Betracht ziehen.",
-    updatedAt: Date.now()
+    updatedAt: new Date("2026-05-22T09:15:00").getTime()
   }]);
 }
 if (localStorage.getItem("todos") === null) { save("todos", []); }
@@ -987,7 +989,7 @@ function startTyping() {
 
 /* ============ Pomodoro focus timer ============ */
 const POMO_MIN = { focus: 25, break: 5 };
-const POMO_CIRC = 2 * Math.PI * 54;
+const POMO_CIRC = 2 * Math.PI * 62;
 let pomo = load("pomo", { phase: "focus", running: false, endsAt: null, remaining: 25 * 60 });
 function pomoSave() { save("pomo", pomo); }
 function pomoRemaining() {
@@ -1173,10 +1175,11 @@ function pomoHTML() {
   return '<div class="card pomo-card">' +
     '<div class="card-h"><span>Fokus-Timer</span>' +
     '<button class="btn ghost" onclick="pomoSwitchPhase()">' + (isBreak ? "→ Fokus" : "→ Pause") + "</button></div>" +
+    '<div class="pomo-body">' +
     '<div class="pomo-dial">' +
-    '<svg viewBox="0 0 168 168" aria-hidden="true">' +
-    '<circle cx="84" cy="84" r="54" fill="none" stroke="var(--border)" stroke-width="8"></circle>' +
-    '<circle id="pomoRing" class="pomo-ring" cx="84" cy="84" r="54" fill="none" stroke="' + ringColor +
+    '<svg viewBox="0 0 190 190" aria-hidden="true">' +
+    '<circle cx="95" cy="95" r="62" fill="none" stroke="var(--border)" stroke-width="8"></circle>' +
+    '<circle id="pomoRing" class="pomo-ring" cx="95" cy="95" r="62" fill="none" stroke="' + ringColor +
     '" stroke-width="8" stroke-linecap="round" stroke-dasharray="' + POMO_CIRC.toFixed(2) +
     '" stroke-dashoffset="' + offset.toFixed(2) + '"></circle>' +
     "</svg>" +
@@ -1187,7 +1190,7 @@ function pomoHTML() {
     '<div class="pomo-actions">' +
     '<button class="btn primary" onclick="pomoToggle()">' + (pomo.running ? "Pause" : "Start") + "</button>" +
     '<button class="btn" onclick="pomoReset()">Zurücksetzen</button>' +
-    "</div></div>";
+    "</div></div></div>";
 }
 
 function semesterHTML(upcoming) {
@@ -1375,7 +1378,9 @@ function viewNotes() {
 
   html += '<div class="toolbar-row">' +
     '<input type="text" id="noteSearch" class="search-bar" style="margin-bottom:0; flex:1; min-width:200px;" placeholder="Notizen durchsuchen …" value="' + esc(state.noteSearch) + '" oninput="noteSearchInput(this.value)">' +
-    '<button class="btn primary" onclick="newNote()">+ Neue Notiz</button></div>';
+    '<button class="btn primary" onclick="newNote()">+ Neue Notiz</button>' +
+    '<button class="btn" onclick="document.getElementById(\'noteFile\').click()" title="Text-, Markdown- oder HTML-Datei als Notiz einfügen">Datei einfügen</button>' +
+    '<input type="file" id="noteFile" accept=".txt,.md,.markdown,.html,.htm,text/*" style="display:none;" onchange="insertNoteFile(event)"></div>';
 
   if (state.notes.length === 0) {
     html += emptyState("Noch keine Notizen. Erstelle deine erste mit dem Button oben.");
@@ -1417,7 +1422,9 @@ function viewCode() {
       '" onclick="state.langFilter=\'' + l + '\';render()">' + esc(l) + "</button>";
   }).join("") + "</div>";
 
-  html += '<div style="margin-bottom:1.25rem;"><button class="btn primary" onclick="newSnippet()">+ Neuer Snippet</button></div>';
+  html += '<div style="margin-bottom:1.25rem; display:flex; gap:0.5rem; flex-wrap:wrap;"><button class="btn primary" onclick="newSnippet()">+ Neuer Snippet</button>' +
+    '<button class="btn" onclick="document.getElementById(\'codeFile\').click()" title="Quellcode-Datei als Snippet einfügen">Datei einfügen</button>' +
+    '<input type="file" id="codeFile" accept=".java,.sql,.py,.sh,.bash,.js,.ts,.jsx,.tsx,.c,.cpp,.h,.cs,.go,.rs,.rb,.php,.html,.css,.json,.xml,.txt,text/*" style="display:none;" onchange="insertCodeFile(event)"></div>';
 
   if (state.snippets.length === 0) {
     html += emptyState("Noch keine Snippets. Speichere deinen ersten mit dem Button oben.");
@@ -1789,6 +1796,28 @@ function openNoteView(id) {
   state.modal = { type: "note-view" };
   render();
 }
+/* Datei als Notiz einfügen — Zeitstempel = echte „zuletzt geändert"-Zeit der Datei */
+function insertNoteFile(e) {
+  const file = e.target.files && e.target.files[0];
+  e.target.value = "";
+  if (!file) return;
+  file.text().then(function (text) {
+    const name = file.name.replace(/\.[^.]+$/, "").trim();
+    const n = {
+      id: uid(),
+      title: name || "Importierte Notiz",
+      subject: "Allgemein",
+      content: text,
+      updatedAt: file.lastModified || Date.now()
+    };
+    state.notes.unshift(n);
+    persist();
+    state.view = "notes";
+    state.selectedNoteId = n.id;
+    state.modal = { type: "note-view" };
+    render();
+  }).catch(function () { alert("Datei konnte nicht gelesen werden."); });
+}
 function editNote() {
   const n = state.notes.find(function (x) { return x.id === state.selectedNoteId; });
   if (!n) return;
@@ -1843,6 +1872,30 @@ function newSnippet() {
 function openSnippetView(id) {
   state.modal = { type: "snippet-view", id: id };
   render();
+}
+/* Datei als Snippet einfügen — Zeitstempel = echte „zuletzt geändert"-Zeit der Datei */
+function insertCodeFile(e) {
+  const file = e.target.files && e.target.files[0];
+  e.target.value = "";
+  if (!file) return;
+  file.text().then(function (text) {
+    const ext = (file.name.match(/\.([^.]+)$/) || ["", ""])[1].toLowerCase();
+    const langMap = { java: "Java", sql: "SQL", py: "Python", sh: "Bash", bash: "Bash" };
+    const s = {
+      id: uid(),
+      title: file.name,
+      language: langMap[ext] || "Other",
+      subject: "",
+      description: "Aus Datei importiert",
+      code: text,
+      updatedAt: file.lastModified || Date.now()
+    };
+    state.snippets.unshift(s);
+    persist();
+    state.view = "code";
+    state.modal = { type: "snippet-view", id: s.id };
+    render();
+  }).catch(function () { alert("Datei konnte nicht gelesen werden."); });
 }
 function saveSnippet(e) {
   e.preventDefault();
