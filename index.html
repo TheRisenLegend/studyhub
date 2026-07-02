@@ -532,6 +532,16 @@
   .prog-card.open .prog-chevron { transform: rotate(90deg); }
   .prog-body { display: flex; flex-direction: column; gap: 0.85rem; margin-top: 0.2rem; }
 
+  /* Prominente Aufgabenstellung */
+  .sheet-cta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    background: linear-gradient(90deg, var(--accent-dim), transparent); border: 1px solid var(--accent);
+    border-radius: 12px; padding: 0.7rem 0.9rem; }
+  .sheet-cta-main { display: flex; align-items: center; gap: 0.7rem; min-width: 0; }
+  .sheet-cta-icon { font-size: 1.4rem; line-height: 1; }
+  .sheet-cta-title { font-weight: 700; font-size: 0.95rem; }
+  .sheet-cta-sub { font-size: 0.76rem; color: var(--muted); font-family: var(--mono); }
+  .sheet-cta-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+
   /* Gerendertes Aufgabenblatt (Markdown + UML) */
   .md-view { font-size: 0.9rem; line-height: 1.6; }
   .md-view h1 { font-size: 1.3rem; margin: 0.2rem 0 0.6rem; }
@@ -828,39 +838,68 @@ if (localStorage.getItem("snippets") === null) {
     updatedAt: new Date("2026-05-22T09:15:00").getTime()
   }]);
 }
-if (localStorage.getItem("progtasks") === null) {
-  save("progtasks", [
+const PROG_SEED = [
     {
-      id: uid(), nr: "01", title: "Einkaufsliste", konzept: "ArrayList",
+      id: "seed-01", v: 1, nr: "01", title: "Einkaufsliste", konzept: "ArrayList",
       difficulty: "green", status: "geloest", mastery: 4, codeLang: "Java",
-      sheet: { name: "Aufgabe01_Einkaufsliste.md", text: "# Aufgabe 01 — Einkaufsliste\n\n**Schwierigkeit:** 🟢 leicht\n\n## Ziel\nDie `ArrayList` kennenlernen: hinzufügen, entfernen, durchlaufen — mit Kapselung (`private`).\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Einkaufsliste {\n        -ArrayList~String~ artikel\n        +Einkaufsliste()\n        +hinzufuegen(String artikel) void\n        +entfernen(String artikel) void\n        +enthaelt(String artikel) boolean\n        +anzahl() int\n        +ausgeben() void\n    }\n```\n\n## Deine Aufgaben\n- **(a)** Feld `artikel` als `private ArrayList<String>`; Konstruktor legt leere Liste an\n- **(b)** `hinzufuegen` hängt ans Ende an\n- **(c)** `entfernen` entfernt (falls vorhanden)\n- **(d)** `enthaelt` gibt `true`/`false` zurück\n- **(e)** `anzahl` gibt die Größe zurück\n- **(f)** `ausgeben` gibt jeden Artikel in eigener Zeile aus\n\n## Spickzettel\n\n| Was du willst | Methode |\n| --- | --- |\n| Element anhängen | `add(x)` |\n| Element entfernen | `remove(x)` |\n| Ist drin? | `contains(x)` |\n| Anzahl | `size()` |" },
+      sheet: { name: "Aufgabe01_Einkaufsliste.md", text: "# Aufgabe 01 — Einkaufsliste\n\n**Schwierigkeit:** 🟢 leicht  ·  **Konzept:** ArrayList\n\n## Worum geht's?\nDu baust eine kleine Klasse, die eine Einkaufsliste verwaltet. Die Liste kann beliebig viele Artikel (Texte) enthalten und wächst automatisch mit, wenn etwas dazukommt — genau dafür ist die `ArrayList` gedacht. Wichtig ist außerdem **Kapselung**: die Datenliste selbst bleibt `private`, von außen greift man nur über deine Methoden darauf zu.\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Einkaufsliste {\n        -ArrayList~String~ artikel\n        +Einkaufsliste()\n        +hinzufuegen(String artikel) void\n        +entfernen(String artikel) void\n        +enthaelt(String artikel) boolean\n        +anzahl() int\n        +ausgeben() void\n    }\n```\n\n## Deine Aufgaben\n- **(a) Feld & Konstruktor** — Lege ein privates Feld `artikel` an, das die Artikel als Liste von Texten speichert. Der Konstruktor stellt eine leere Liste bereit.\n- **(b) hinzufuegen** — Ein übergebener Artikel wird ans Ende der Liste angehängt.\n- **(c) entfernen** — Ein übergebener Artikel wird aus der Liste entfernt, falls er vorhanden ist. Ist er nicht drin, soll nichts passieren (kein Fehler).\n- **(d) enthaelt** — Liefert `true`, wenn der Artikel in der Liste steht, sonst `false`.\n- **(e) anzahl** — Liefert, wie viele Artikel aktuell in der Liste sind.\n- **(f) ausgeben** — Gibt alle Artikel aus, jeden in einer eigenen Zeile.\n\n## Erwartete Ausgabe\n```\nMeine Einkaufsliste (3 Artikel):\n- Milch\n- Brot\n- Äpfel\n```" },
       code: "package aufgabe01;\n\nimport java.util.ArrayList;\n\npublic class Einkaufsliste {\n\n    private ArrayList<String> artikel;\n\n    public Einkaufsliste() {\n        artikel = new ArrayList<String>();\n    }\n\n    public void hinzufuegen(String artikel) {\n        this.artikel.add(artikel);\n    }\n\n    public void entfernen(String artikel) {\n        this.artikel.remove(artikel);\n    }\n\n    public boolean enthaelt(String artikel) {\n        return this.artikel.contains(artikel);\n    }\n\n    public int anzahl() {\n        return artikel.size();\n    }\n\n    public void ausgeben() {\n        for (String a : artikel) {\n            System.out.println(\"- \" + a);\n        }\n    }\n}",
       comments: [
-        { id: uid(), text: "Verbesserung: `enthaelt` und `anzahl` geben das Ergebnis direkt zurück (`return ...`) — kein if/else nötig. Sauber gelöst!", role: "coach", createdAt: new Date("2026-06-28T10:00:00").getTime() },
-        { id: uid(), text: "Frage: Warum size() statt length? → Weil ArrayList eine Klasse mit Methoden ist, kein Array.", role: "ich", createdAt: new Date("2026-06-28T10:05:00").getTime() }
+        { id: "c01-1", text: "Verbesserung: `enthaelt` und `anzahl` geben das Ergebnis direkt zurück (`return ...`) — kein if/else nötig. Sauber gelöst!", role: "coach", createdAt: new Date("2026-06-28T10:00:00").getTime() },
+        { id: "c01-2", text: "Frage: Warum size() statt length? → Weil ArrayList eine Klasse mit Methoden ist, kein Array.", role: "ich", createdAt: new Date("2026-06-28T10:05:00").getTime() }
       ],
       updatedAt: new Date("2026-06-28T10:05:00").getTime()
     },
     {
-      id: uid(), nr: "02", title: "Highscore-Liste", konzept: "Comparable",
-      difficulty: "orange", status: "offen", mastery: 0, codeLang: "Java",
-      sheet: { name: "Aufgabe02_Highscore.md", text: "# Aufgabe 02 — Highscore-Liste\n\n**Schwierigkeit:** 🟠 mittel\n\n## Ziel\nEigene Objekte in einer Liste sortieren mit dem Interface `Comparable`.\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Comparable~Spieler~ {\n        <<interface>>\n        +compareTo(Spieler) int\n    }\n    class Spieler {\n        -String name\n        -int punkte\n        +Spieler(String name, int punkte)\n        +getName() String\n        +getPunkte() int\n        +compareTo(Spieler anderer) int\n        +toString() String\n    }\n    Comparable~Spieler~ <|.. Spieler : implements\n```\n\n## Deine Aufgaben\n- **(a)** Klasse `Spieler` (private `name`, `punkte`, Getter)\n- **(b)** `compareTo` implementieren (nach Punkten)\n- **(c)** Sortier-Richtung drehen → höchste Punktzahl oben\n- **(d)** `toString()` überschreiben, z. B. `Anna (120 Punkte)`\n\n## compareTo — Rückgabewert\n\n| Rückgabe | Bedeutung |\n| --- | --- |\n| negativ | `this` kommt zuerst |\n| 0 | beide gleich |\n| positiv | `this` kommt später |\n\n> Sortieren mit `Collections.sort(liste)` — kein eigener Sortier-Algorithmus!" },
-      code: "", comments: [], updatedAt: new Date("2026-06-30T12:00:00").getTime()
+      id: "seed-02", v: 2, certified: true, nr: "02", title: "Highscore-Liste", konzept: "Comparable",
+      difficulty: "orange", status: "geloest", mastery: 4, codeLang: "Java",
+      sheet: { name: "Aufgabe02_Highscore.md", text: "# Aufgabe 02 — Highscore-Liste\n\n**Schwierigkeit:** 🟠 mittel  ·  **Konzept:** Comparable\n\n## Worum geht's?\nBisher hattest du eine Liste von Texten. Jetzt speicherst du **eigene Objekte** — Spieler mit Name und Punktzahl — in einer Liste und bringst Java bei, wie es diese Objekte **sortieren** soll. Dafür implementiert die Klasse das Interface `Comparable`. Ziel ist eine Highscore-Liste, in der die **höchste Punktzahl oben** steht.\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Comparable~Spieler~ {\n        <<interface>>\n        +compareTo(Spieler) int\n    }\n    class Spieler {\n        -String name\n        -int punkte\n        +Spieler(String name, int punkte)\n        +getName() String\n        +getPunkte() int\n        +compareTo(Spieler anderer) int\n        +toString() String\n    }\n    Comparable~Spieler~ <|.. Spieler : implements\n```\n\n## Deine Aufgaben\n- **(a) Klasse `Spieler`** — Zwei private Felder: `name` (Text) und `punkte` (Zahl). Ein Konstruktor setzt beide, dazu je ein Getter `getName()` und `getPunkte()`.\n- **(b) Sortierbar machen** — Die Klasse implementiert `Comparable<Spieler>` und damit die Methode `compareTo`. Verglichen wird nach der Punktzahl.\n- **(c) Reihenfolge** — Die Liste soll die **höchste Punktzahl zuerst** zeigen. Achte auf die Vergleichsrichtung.\n- **(d) `toString`** — Ein Spieler stellt sich als Text im Format `Name (Punkte Punkte)` dar, z. B. `Anna (120 Punkte)`.\n\n## So funktioniert `compareTo` (Konzept)\nDie Methode gibt eine Zahl zurück, deren **Vorzeichen** die Reihenfolge bestimmt:\n\n| Rückgabe | Bedeutung |\n| --- | --- |\n| negativ | dieses Objekt kommt zuerst |\n| 0 | beide gelten als gleich |\n| positiv | dieses Objekt kommt später |\n\n## Erwartete Ausgabe\n```\n=== Highscore ===\n1. Chris (200 Punkte)\n2. Anna (120 Punkte)\n3. Bea (90 Punkte)\n```" },
+      code: "package aufgabe02;\n\npublic class Spieler implements Comparable<Spieler> {\n\n    private String name;\n    private int punkte;\n\n    public Spieler(String name, int punkte) {\n        this.name = name;\n        this.punkte = punkte;\n    }\n\n    public String getName() {\n        return name;\n    }\n\n    public int getPunkte() {\n        return punkte;\n    }\n\n    @Override\n    public int compareTo(Spieler anderer) {\n        // höchste Punktzahl oben -> Argumente vertauschen\n        return Integer.compare(anderer.getPunkte(), this.punkte);\n    }\n\n    @Override\n    public String toString() {\n        return name + \" (\" + punkte + \" Punkte)\";\n    }\n}",
+      comments: [
+        { id: "c02-1", text: "Stark: dein `compareTo` war exakt richtig (Argumente getauscht → höchste Punktzahl oben). Einziger Fix: `toString` auf das Format `Anna (120 Punkte)` gebracht statt der Eclipse-Autoversion `Spieler [name=…]`. Bestanden! ✅", role: "coach", createdAt: new Date("2026-07-02T15:30:00").getTime() }
+      ],
+      updatedAt: new Date("2026-07-02T15:30:00").getTime()
     },
     {
-      id: uid(), nr: "03", title: "Wörter zählen", konzept: "HashMap / TreeMap",
+      id: "seed-03", v: 1, nr: "03", title: "Wörter zählen", konzept: "HashMap / TreeMap",
       difficulty: "orange", status: "offen", mastery: 0, codeLang: "Java",
-      sheet: { name: "Aufgabe03_Woerterzaehlen.md", text: "# Aufgabe 03 — Wörter zählen\n\n**Schwierigkeit:** 🟠 mittel\n\n## Ziel\nDie `Map` (Schlüssel → Wert) zum Zählen nutzen. Unterschied `HashMap` (ungeordnet) ↔ `TreeMap` (sortiert).\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Woerterzaehler {\n        +zaehle(Map map, String[] woerter) void\n        +ausgeben(Map map) void\n        +haeufigstes(Map map) String\n    }\n    class Map {\n        <<interface>>\n    }\n    Woerterzaehler ..> Map : benutzt\n```\n\n## Deine Aufgaben\n- **(a)** Wörter in Kleinbuchstaben umwandeln\n- **(b)** Zähler in der Map hochzählen (`getOrDefault`)\n- **(c)** Einträge ausgeben: `wort -> anzahl`\n- **(d, Bonus)** häufigstes Wort via `Collections.max`\n\n## Map-Arten\n\n| Map | Reihenfolge |\n| --- | --- |\n| `HashMap` | ungeordnet |\n| `TreeMap` | A → Z |\n| `TreeMap(reverseOrder())` | Z → A |\n\n> Dieselbe Methode mit HashMap UND TreeMap (auf-/absteigend) aufrufen." },
+      sheet: { name: "Aufgabe03_Woerterzaehlen.md", text: "# Aufgabe 03 — Wörter zählen\n\n**Schwierigkeit:** 🟠 mittel  ·  **Konzept:** HashMap / TreeMap\n\n## Worum geht's?\nDu bekommst eine Sammlung von Wörtern (manche kommen mehrfach vor, teils groß-, teils kleingeschrieben) und zählst, **wie oft jedes Wort vorkommt**. Zum Speichern nutzt du eine `Map` — eine Zuordnung von **Schlüssel → Wert** (hier: Wort → Anzahl). Spannend ist der Unterschied der Map-Typen: eine `HashMap` hat **keine** feste Reihenfolge, eine `TreeMap` ist **nach dem Schlüssel sortiert**.\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Woerterzaehler {\n        +zaehle(Map map, String[] woerter) void\n        +ausgeben(Map map) void\n        +haeufigstes(Map map) String\n    }\n    class Map {\n        <<interface>>\n    }\n    Woerterzaehler ..> Map : benutzt\n```\n\n## Deine Aufgaben\n- **(a) Vereinheitlichen** — Behandle Groß-/Kleinschreibung gleich, damit `Apfel` und `apfel` als dasselbe Wort zählen.\n- **(b) Zählen** — Fülle die übergebene Map so, dass zu jedem Wort seine Häufigkeit gespeichert ist.\n- **(c) Ausgeben** — Gib jeden Eintrag als `wort -> anzahl` aus, jeweils in einer eigenen Zeile. Die Reihenfolge ergibt sich aus dem Map-Typ (das musst du nicht selbst steuern).\n- **(d) Häufigstes Wort (Bonus)** — Ermittle das Wort mit der größten Häufigkeit.\n\n## Die Map-Typen (Konzept)\n\n| Map | Reihenfolge der Ausgabe |\n| --- | --- |\n| `HashMap` | ungeordnet (kann wechseln) |\n| `TreeMap` | Schlüssel aufsteigend, A → Z |\n| `TreeMap` (umgekehrt) | Schlüssel absteigend, Z → A |\n\n## Erwartete Ausgabe (Auszug)\n```\napfel -> 4\nbirne -> 3\nkirsche -> 1\n```" },
       code: "", comments: [], updatedAt: new Date("2026-07-02T09:00:00").getTime()
     },
     {
-      id: uid(), nr: "04", title: "Mini-Bundesliga", konzept: "alles zusammen",
+      id: "seed-04", v: 1, nr: "04", title: "Mini-Bundesliga", konzept: "alles zusammen",
       difficulty: "red", status: "offen", mastery: 0, codeLang: "Java",
-      sheet: { name: "Aufgabe04_Bundesliga.md", text: "# Aufgabe 04 — Mini-Bundesliga\n\n**Schwierigkeit:** 🔴 schwer\n\n## Ziel\nAlles zusammen: eine Klasse `Verein` + eine Tabelle, sortiert nach Punkten, Tordifferenz und Toren (angelehnt an Übung 7).\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Verein {\n        -String name\n        -int punkte\n        -int tore\n        -int gegentore\n        +tordifferenz() int\n        +compareTo(Verein anderer) int\n    }\n    class Comparable {\n        <<interface>>\n    }\n    Comparable <|.. Verein : implements\n```\n\n## Deine Aufgaben\n- **(a)** Klasse `Verein` mit Name, Punkten, Toren, Gegentoren\n- **(b)** Spiele auswerten (Sieg 3, Remis 1, Niederlage 0 Punkte)\n- **(c)** Tabelle sortieren: Punkte → Tordifferenz → Tore\n- **(d)** Tabelle formatiert ausgeben\n\n> Kommt als nächste Aufgabe — das ausführliche Aufgabenblatt erstellt dein Coach noch." },
+      sheet: { name: "Aufgabe04_Bundesliga.md", text: "# Aufgabe 04 — Mini-Bundesliga\n\n**Schwierigkeit:** 🔴 schwer  ·  **Konzept:** alles zusammen\n\n## Worum geht's?\nDie große Übung, die alles verbindet: Du modellierst Vereine und berechnest daraus eine **Tabelle** wie in der echten Bundesliga — sortiert nach Punkten, bei Gleichstand nach Tordifferenz und erzielten Toren. Angelehnt an Übung 7 der THA. Hier kommen `Comparable`, Objekte und Listen aus den vorherigen Aufgaben zusammen.\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Verein {\n        -String name\n        -int punkte\n        -int tore\n        -int gegentore\n        +tordifferenz() int\n        +compareTo(Verein anderer) int\n    }\n    class Comparable {\n        <<interface>>\n    }\n    Comparable <|.. Verein : implements\n```\n\n## Deine Aufgaben\n- **(a) Klasse `Verein`** — speichert Name, Punkte, erzielte Tore und Gegentore; die Tordifferenz ergibt sich daraus.\n- **(b) Spiele auswerten** — pro Spiel beide Vereine aktualisieren (Sieg = 3, Remis = 1, Niederlage = 0 Punkte; Tore und Gegentore mitzählen).\n- **(c) Tabelle sortieren** — Reihenfolge: zuerst Punkte, bei Gleichstand Tordifferenz, dann erzielte Tore.\n- **(d) Ausgeben** — die fertige Tabelle sauber formatiert ausgeben.\n\n> Kommt als Nächstes — das ausführliche Aufgabenblatt mit Beispiel-Tabelle bekommst du, sobald du bei Aufgabe 03 durch bist." },
       code: "", comments: [], updatedAt: new Date("2026-07-02T09:00:00").getTime()
     }
-  ]);
-}
+];
+
+/* Merge-on-Load: Seed anwenden UND bestehende Installs auf neue Inhalte/Lösungen
+   heben, ohne den Fortschritt des Users zu zerstören (nach nr, mit Version v). */
+(function syncProgtasks() {
+  const stored = load("progtasks", null);
+  if (stored === null || !Array.isArray(stored)) { save("progtasks", PROG_SEED); return; }
+  let changed = false;
+  PROG_SEED.forEach(function (seed) {
+    const cur = stored.find(function (t) { return t.nr === seed.nr; });
+    if (!cur) { stored.push(seed); changed = true; return; }
+    if ((cur.v || 0) < (seed.v || 0)) {
+      cur.title = seed.title; cur.konzept = seed.konzept; cur.difficulty = seed.difficulty;
+      cur.sheet = seed.sheet; cur.codeLang = seed.codeLang; cur.v = seed.v;
+      if (seed.code) { cur.code = seed.code; }               // korrigierte Lösung ausspielen
+      if (seed.certified) { cur.status = seed.status; cur.mastery = seed.mastery; }
+      if (seed.comments && seed.comments.length) {           // Coach-Kommentare nach id mergen
+        if (!Array.isArray(cur.comments)) { cur.comments = []; }
+        seed.comments.forEach(function (sc) {
+          if (!cur.comments.some(function (c) { return c.id === sc.id; })) { cur.comments.push(sc); }
+        });
+        cur.comments.sort(function (a, b) { return (a.createdAt || 0) - (b.createdAt || 0); });
+      }
+      changed = true;
+    }
+  });
+  if (changed) { save("progtasks", stored); }
+})();
 if (localStorage.getItem("todos") === null) { save("todos", []); }
 
 /* ============ State ============ */
@@ -1717,6 +1756,19 @@ function progCard(t) {
   h += '<div class="prog-body">';
   if (t.konzept) { h += '<div class="prog-row"><span class="prog-label">Konzept</span> ' + esc(t.konzept) + "</div>"; }
 
+  /* Aufgabenstellung — prominent & leicht auffindbar, ganz oben */
+  h += '<input type="file" id="sheetFile-' + t.id + '" accept=".md,.markdown,.txt,text/*" style="display:none;" onchange="onProgFile(event,\'' + t.id + '\',\'sheet\')">';
+  h += '<div class="sheet-cta">' +
+    '<div class="sheet-cta-main"><span class="sheet-cta-icon">📄</span><div>' +
+      '<div class="sheet-cta-title">Aufgabenstellung</div>' +
+      '<div class="sheet-cta-sub">' + (t.sheet ? esc(t.sheet.name || (t.title + ".md")) : "Noch kein Aufgabenblatt hinterlegt") + "</div>" +
+    "</div></div>" +
+    '<div class="sheet-cta-actions">' +
+    (t.sheet
+      ? '<button class="btn primary" onclick="openProgSheet(\'' + t.id + '\')">Öffnen</button><button class="btn ghost" onclick="document.getElementById(\'sheetFile-' + t.id + '\').click()">Ersetzen</button>'
+      : '<button class="btn primary" onclick="document.getElementById(\'sheetFile-' + t.id + '\').click()">Aufgabenblatt hochladen</button>') +
+    "</div></div>";
+
   /* Status setzen + Meisterung (wie gut gelöst) */
   h += '<div class="prog-row"><span class="prog-label">Status</span>' +
     Object.keys(PROG_STATUS).map(function (k) {
@@ -1729,18 +1781,6 @@ function progCard(t) {
     [1, 2, 3, 4, 5].map(function (n) {
       return '<button class="star ' + (n <= (t.mastery || 0) ? "on" : "") + '" title="' + n + ' von 5" onclick="setProgMastery(\'' + t.id + '\',' + n + ')">★</button>';
     }).join("") + "</span></div>";
-
-  /* Aufgabenblatt */
-  h += '<input type="file" id="sheetFile-' + t.id + '" accept=".md,.markdown,.txt,text/*" style="display:none;" onchange="onProgFile(event,\'' + t.id + '\',\'sheet\')">';
-  h += '<div class="prog-row"><span class="prog-label">Aufgabenblatt</span>';
-  if (t.sheet) {
-    h += "<span>" + esc(t.sheet.name || (t.title + ".md")) + "</span>" +
-      '<button class="btn ghost" onclick="openProgSheet(\'' + t.id + '\')">Ansehen</button>' +
-      '<button class="btn ghost" onclick="document.getElementById(\'sheetFile-' + t.id + '\').click()">Ersetzen</button>';
-  } else {
-    h += '<button class="btn" onclick="document.getElementById(\'sheetFile-' + t.id + '\').click()" title="Markdown-/Textdatei hochladen">Aufgabenblatt hochladen</button>';
-  }
-  h += "</div>";
 
   /* Code-Lösung */
   h += '<input type="file" id="codeFileP-' + t.id + '" accept=".java,.sql,.py,.sh,.bash,.txt,text/*" style="display:none;" onchange="onProgFile(event,\'' + t.id + '\',\'code\')">';
