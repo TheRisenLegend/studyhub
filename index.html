@@ -491,6 +491,73 @@
   .form-actions { display: flex; gap: 0.5rem; }
   .search-bar { width: 100%; margin-bottom: 1rem; font-family: var(--mono); font-size: 0.88rem; }
 
+  /* ---------- Prog Aufgaben ---------- */
+  .level-card { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem 1.75rem; margin-bottom: 1.5rem; }
+  .level-badge { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 16px; background: var(--accent-dim); border: 1px solid var(--accent); flex-shrink: 0; }
+  .level-badge b { font-size: 1.6rem; font-weight: 800; color: var(--accent); line-height: 1; }
+  .level-badge small { font-size: 0.55rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+  .level-main { flex: 1; min-width: 220px; }
+  .level-top { display: flex; justify-content: space-between; align-items: baseline; gap: 0.75rem; margin-bottom: 0.4rem; }
+  .level-top b { font-size: 1rem; }
+  .level-top span { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+  .xp-track { height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--border); }
+  .xp-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), #62b6e0); transition: width 500ms ease; }
+  .level-stats { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  .level-stat { text-align: center; }
+  .level-stat b { display: block; font-size: 1.25rem; font-weight: 700; }
+  .level-stat small { color: var(--muted); font-size: 0.72rem; }
+  .prog-card { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1rem; border-left: 3px solid var(--diff, var(--border)); }
+  .prog-head { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+  .prog-nr { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+  .prog-title { font-weight: 700; font-size: 1.02rem; flex: 1; min-width: 0; }
+  .prog-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; font-size: 0.85rem; }
+  .prog-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 700; }
+  .stars { display: inline-flex; gap: 0.12rem; }
+  .star { cursor: pointer; font-size: 0.95rem; line-height: 1; color: var(--border); background: none; padding: 0; }
+  .star.on { color: var(--amber); }
+  .comments { border-top: 1px solid var(--border); padding-top: 0.75rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .comment { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.85rem; }
+  .comment .who { flex-shrink: 0; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; padding: 0.15rem 0.4rem; border-radius: 5px; margin-top: 0.1rem; }
+  .comment .who.coach { background: var(--accent-dim); color: var(--accent); }
+  .comment .who.ich { background: var(--surface-2); color: var(--muted); }
+  .comment-body { flex: 1; min-width: 0; }
+  .comment-body .txt { white-space: pre-wrap; word-break: break-word; }
+  .comment-meta { font-size: 0.68rem; color: var(--muted); margin-top: 0.15rem; }
+  .comment-add { display: flex; gap: 0.5rem; align-items: flex-start; }
+  .comment-add textarea { flex: 1; min-height: 40px; font-size: 0.84rem; resize: vertical; }
+
+  /* Aufgaben-Akkordeon: Kopf klickbar, Details darunter */
+  .prog-toggle { display: flex; align-items: center; gap: 0.6rem; flex: 1; min-width: 0; text-align: left; padding: 0; }
+  .prog-chevron { flex-shrink: 0; transition: transform 200ms; color: var(--muted); }
+  .prog-card.open .prog-chevron { transform: rotate(90deg); }
+  .prog-body { display: flex; flex-direction: column; gap: 0.85rem; margin-top: 0.2rem; }
+
+  /* Gerendertes Aufgabenblatt (Markdown + UML) */
+  .md-view { font-size: 0.9rem; line-height: 1.6; }
+  .md-view h1 { font-size: 1.3rem; margin: 0.2rem 0 0.6rem; }
+  .md-view h2 { font-size: 1.05rem; margin: 1.1rem 0 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--border); }
+  .md-view h3 { font-size: 0.95rem; margin: 0.9rem 0 0.4rem; color: var(--text); }
+  .md-view p { margin: 0.5rem 0; }
+  .md-view ul { margin: 0.5rem 0 0.5rem 1.2rem; display: flex; flex-direction: column; gap: 0.3rem; }
+  .md-view li { list-style: disc; }
+  .md-view code { font-family: var(--mono); font-size: 0.85em; background: var(--surface-2); padding: 0.1em 0.35em; border-radius: 5px; }
+  .md-view pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem; overflow-x: auto; margin: 0.6rem 0; }
+  .md-view pre code { background: none; padding: 0; font-size: 0.82rem; line-height: 1.5; }
+  .md-view blockquote { border-left: 3px solid var(--accent); background: var(--accent-dim); padding: 0.5rem 0.8rem; border-radius: 0 8px 8px 0; margin: 0.6rem 0; color: var(--text); }
+  .md-table { width: 100%; border-collapse: collapse; margin: 0.7rem 0; font-size: 0.84rem; }
+  .md-table th, .md-table td { border: 1px solid var(--border); padding: 0.45rem 0.65rem; text-align: left; vertical-align: top; }
+  .md-table th { background: var(--surface-2); font-weight: 600; }
+  .md-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .mermaid { display: flex; justify-content: center; background: #fbfbfe; border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin: 0.8rem 0; overflow-x: auto; font-family: var(--mono); font-size: 0.8rem; color: #333; }
+  .mermaid svg { max-width: 100%; height: auto; }
+
+  /* Geteilte Ansicht: Aufgabenstellung | Code */
+  .modal.split { max-width: min(1280px, 96vw); }
+  .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items: start; }
+  .split-pane { min-width: 0; max-height: 74vh; overflow-y: auto; padding-right: 0.4rem; }
+  .split-pane-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 700; margin-bottom: 0.5rem; }
+  @media (max-width: 720px) { .split-grid { grid-template-columns: 1fr; } }
+
   /* ---------- Quick add ---------- */
   .quick-add { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
   .quick-add input { flex: 1; }
@@ -665,6 +732,10 @@
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4.5L1.5 9 6 13.5M12 4.5L16.5 9 12 13.5"></path></svg>
       <span>Code</span>
     </button>
+    <button class="nav-btn" data-view="prog" onclick="go('prog')">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 1.5l7 3.5-7 3.5-7-3.5 7-3.5z"></path><path d="M4 8v3.5c0 1 2.2 2 5 2s5-1 5-2V8"></path></svg>
+      <span>Prog Aufgaben</span>
+    </button>
     <div class="sidebar-bottom">
       <button class="nav-btn" onclick="toggleLayout()" title="Zwischen breiter und schmaler Ansicht wechseln">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1.5" y="3" width="15" height="10" rx="2"></rect><path d="M6 16h6"></path></svg>
@@ -693,6 +764,16 @@ const SUBJECT_COLORS = {
 const LANGUAGES = ["Java", "SQL", "Python", "Bash", "Other"];
 const PRIO_COLORS = { high: "var(--red)", mid: "var(--amber)", low: "var(--green)" };
 const PRIO_LABELS = { high: "Hoch", mid: "Mittel", low: "Niedrig" };
+/* Prog-Aufgaben: Ampel-Schwierigkeit + Status + Level-System */
+const DIFF_LABELS = { green: "leicht", orange: "mittel", red: "schwer" };
+const DIFF_BADGE = { green: "green", orange: "amber", red: "red" };   // -> vorhandene .badge-Farben
+const DIFF_DOT = { green: "🟢", orange: "🟠", red: "🔴" };
+const DIFF_XP = { green: 10, orange: 20, red: 30 };                    // XP fürs Lösen
+const DIFF_ORDER = ["green", "orange", "red"];
+const PROG_STATUS = { offen: "Offen", inArbeit: "In Arbeit", geloest: "Gelöst" };
+const PROG_STATUS_BADGE = { offen: "", inArbeit: "amber", geloest: "green" };
+const PROG_LANGS = ["Java", "SQL", "Python", "Bash", "Other"];
+const XP_PER_LEVEL = 50;  // XP pro Level-Stufe
 const COLS = [
   { key: "open",  label: "Offen" },
   { key: "doing", label: "In Arbeit" },
@@ -747,6 +828,39 @@ if (localStorage.getItem("snippets") === null) {
     updatedAt: new Date("2026-05-22T09:15:00").getTime()
   }]);
 }
+if (localStorage.getItem("progtasks") === null) {
+  save("progtasks", [
+    {
+      id: uid(), nr: "01", title: "Einkaufsliste", konzept: "ArrayList",
+      difficulty: "green", status: "geloest", mastery: 4, codeLang: "Java",
+      sheet: { name: "Aufgabe01_Einkaufsliste.md", text: "# Aufgabe 01 — Einkaufsliste\n\n**Schwierigkeit:** 🟢 leicht\n\n## Ziel\nDie `ArrayList` kennenlernen: hinzufügen, entfernen, durchlaufen — mit Kapselung (`private`).\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Einkaufsliste {\n        -ArrayList~String~ artikel\n        +Einkaufsliste()\n        +hinzufuegen(String artikel) void\n        +entfernen(String artikel) void\n        +enthaelt(String artikel) boolean\n        +anzahl() int\n        +ausgeben() void\n    }\n```\n\n## Deine Aufgaben\n- **(a)** Feld `artikel` als `private ArrayList<String>`; Konstruktor legt leere Liste an\n- **(b)** `hinzufuegen` hängt ans Ende an\n- **(c)** `entfernen` entfernt (falls vorhanden)\n- **(d)** `enthaelt` gibt `true`/`false` zurück\n- **(e)** `anzahl` gibt die Größe zurück\n- **(f)** `ausgeben` gibt jeden Artikel in eigener Zeile aus\n\n## Spickzettel\n\n| Was du willst | Methode |\n| --- | --- |\n| Element anhängen | `add(x)` |\n| Element entfernen | `remove(x)` |\n| Ist drin? | `contains(x)` |\n| Anzahl | `size()` |" },
+      code: "package aufgabe01;\n\nimport java.util.ArrayList;\n\npublic class Einkaufsliste {\n\n    private ArrayList<String> artikel;\n\n    public Einkaufsliste() {\n        artikel = new ArrayList<String>();\n    }\n\n    public void hinzufuegen(String artikel) {\n        this.artikel.add(artikel);\n    }\n\n    public void entfernen(String artikel) {\n        this.artikel.remove(artikel);\n    }\n\n    public boolean enthaelt(String artikel) {\n        return this.artikel.contains(artikel);\n    }\n\n    public int anzahl() {\n        return artikel.size();\n    }\n\n    public void ausgeben() {\n        for (String a : artikel) {\n            System.out.println(\"- \" + a);\n        }\n    }\n}",
+      comments: [
+        { id: uid(), text: "Verbesserung: `enthaelt` und `anzahl` geben das Ergebnis direkt zurück (`return ...`) — kein if/else nötig. Sauber gelöst!", role: "coach", createdAt: new Date("2026-06-28T10:00:00").getTime() },
+        { id: uid(), text: "Frage: Warum size() statt length? → Weil ArrayList eine Klasse mit Methoden ist, kein Array.", role: "ich", createdAt: new Date("2026-06-28T10:05:00").getTime() }
+      ],
+      updatedAt: new Date("2026-06-28T10:05:00").getTime()
+    },
+    {
+      id: uid(), nr: "02", title: "Highscore-Liste", konzept: "Comparable",
+      difficulty: "orange", status: "offen", mastery: 0, codeLang: "Java",
+      sheet: { name: "Aufgabe02_Highscore.md", text: "# Aufgabe 02 — Highscore-Liste\n\n**Schwierigkeit:** 🟠 mittel\n\n## Ziel\nEigene Objekte in einer Liste sortieren mit dem Interface `Comparable`.\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Comparable~Spieler~ {\n        <<interface>>\n        +compareTo(Spieler) int\n    }\n    class Spieler {\n        -String name\n        -int punkte\n        +Spieler(String name, int punkte)\n        +getName() String\n        +getPunkte() int\n        +compareTo(Spieler anderer) int\n        +toString() String\n    }\n    Comparable~Spieler~ <|.. Spieler : implements\n```\n\n## Deine Aufgaben\n- **(a)** Klasse `Spieler` (private `name`, `punkte`, Getter)\n- **(b)** `compareTo` implementieren (nach Punkten)\n- **(c)** Sortier-Richtung drehen → höchste Punktzahl oben\n- **(d)** `toString()` überschreiben, z. B. `Anna (120 Punkte)`\n\n## compareTo — Rückgabewert\n\n| Rückgabe | Bedeutung |\n| --- | --- |\n| negativ | `this` kommt zuerst |\n| 0 | beide gleich |\n| positiv | `this` kommt später |\n\n> Sortieren mit `Collections.sort(liste)` — kein eigener Sortier-Algorithmus!" },
+      code: "", comments: [], updatedAt: new Date("2026-06-30T12:00:00").getTime()
+    },
+    {
+      id: uid(), nr: "03", title: "Wörter zählen", konzept: "HashMap / TreeMap",
+      difficulty: "orange", status: "offen", mastery: 0, codeLang: "Java",
+      sheet: { name: "Aufgabe03_Woerterzaehlen.md", text: "# Aufgabe 03 — Wörter zählen\n\n**Schwierigkeit:** 🟠 mittel\n\n## Ziel\nDie `Map` (Schlüssel → Wert) zum Zählen nutzen. Unterschied `HashMap` (ungeordnet) ↔ `TreeMap` (sortiert).\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Woerterzaehler {\n        +zaehle(Map map, String[] woerter) void\n        +ausgeben(Map map) void\n        +haeufigstes(Map map) String\n    }\n    class Map {\n        <<interface>>\n    }\n    Woerterzaehler ..> Map : benutzt\n```\n\n## Deine Aufgaben\n- **(a)** Wörter in Kleinbuchstaben umwandeln\n- **(b)** Zähler in der Map hochzählen (`getOrDefault`)\n- **(c)** Einträge ausgeben: `wort -> anzahl`\n- **(d, Bonus)** häufigstes Wort via `Collections.max`\n\n## Map-Arten\n\n| Map | Reihenfolge |\n| --- | --- |\n| `HashMap` | ungeordnet |\n| `TreeMap` | A → Z |\n| `TreeMap(reverseOrder())` | Z → A |\n\n> Dieselbe Methode mit HashMap UND TreeMap (auf-/absteigend) aufrufen." },
+      code: "", comments: [], updatedAt: new Date("2026-07-02T09:00:00").getTime()
+    },
+    {
+      id: uid(), nr: "04", title: "Mini-Bundesliga", konzept: "alles zusammen",
+      difficulty: "red", status: "offen", mastery: 0, codeLang: "Java",
+      sheet: { name: "Aufgabe04_Bundesliga.md", text: "# Aufgabe 04 — Mini-Bundesliga\n\n**Schwierigkeit:** 🔴 schwer\n\n## Ziel\nAlles zusammen: eine Klasse `Verein` + eine Tabelle, sortiert nach Punkten, Tordifferenz und Toren (angelehnt an Übung 7).\n\n## Klassendiagramm\n\n```mermaid\nclassDiagram\n    class Verein {\n        -String name\n        -int punkte\n        -int tore\n        -int gegentore\n        +tordifferenz() int\n        +compareTo(Verein anderer) int\n    }\n    class Comparable {\n        <<interface>>\n    }\n    Comparable <|.. Verein : implements\n```\n\n## Deine Aufgaben\n- **(a)** Klasse `Verein` mit Name, Punkten, Toren, Gegentoren\n- **(b)** Spiele auswerten (Sieg 3, Remis 1, Niederlage 0 Punkte)\n- **(c)** Tabelle sortieren: Punkte → Tordifferenz → Tore\n- **(d)** Tabelle formatiert ausgeben\n\n> Kommt als nächste Aufgabe — das ausführliche Aufgabenblatt erstellt dein Coach noch." },
+      code: "", comments: [], updatedAt: new Date("2026-07-02T09:00:00").getTime()
+    }
+  ]);
+}
 if (localStorage.getItem("todos") === null) { save("todos", []); }
 
 /* ============ State ============ */
@@ -756,12 +870,17 @@ const state = {
   todos: load("todos", []),
   notes: load("notes", []),
   snippets: load("snippets", []),
+  progtasks: load("progtasks", []),
   layout: load("layout", "wide"),
   selectedNoteId: null,
   modal: null,
   noteSearch: "",
   langFilter: "Alle",
   snippetSearch: "",
+  progSearch: "",
+  editProgId: null,
+  progUpload: null,
+  progOpen: {},
   showExamForm: false,
   editSnippetId: null,
   addTaskCol: null,
@@ -786,6 +905,7 @@ function persist() {
   save("todos", state.todos);
   save("notes", state.notes);
   save("snippets", state.snippets);
+  save("progtasks", state.progtasks);
 }
 
 /* ============ Helpers ============ */
@@ -898,6 +1018,64 @@ function renderMarkdown(src) {
   }
   flushPara(); closeList();
   return html.replace(/\u0000B(\d+)\u0000/g, function (m, i) { return blocks[+i]; });
+}
+/* Reicheres Markdown NUR für Prog-Aufgabenblätter: Mermaid-UML, Tabellen,
+   Blockquotes/Callouts, Überschriften, Listen, Code. */
+function renderSheet(src) {
+  const blocks = [];
+  let text = String(src).replace(/```(\w*)\r?\n?([\s\S]*?)```/g, function (m, lang, code) {
+    code = code.replace(/^\r?\n/, "").replace(/\s+$/, "");
+    if ((lang || "").toLowerCase() === "mermaid") {
+      blocks.push('<div class="mermaid">' + esc(code) + "</div>");
+    } else {
+      blocks.push("<pre><code>" + esc(code) + "</code></pre>");
+    }
+    return " B" + (blocks.length - 1) + " ";
+  });
+  text = esc(text);
+  const lines = text.split("\n");
+  let html = "", inList = false, para = [], bq = [];
+  function inline(s) {
+    return s
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  }
+  function flushPara() { if (para.length) { html += "<p>" + inline(para.join("<br>")) + "</p>"; para = []; } }
+  function closeList() { if (inList) { html += "</ul>"; inList = false; } }
+  function closeBq() { if (bq.length) { html += "<blockquote>" + bq.map(inline).join("<br>") + "</blockquote>"; bq = []; } }
+  function closeAll() { flushPara(); closeList(); closeBq(); }
+  function isSep(l) { return /-/.test(l) && /^[\s:|-]+$/.test(l.replace(/^\s*\|/, "").replace(/\|\s*$/, "")); }
+  function cells(l) { return l.replace(/^\s*\|/, "").replace(/\|\s*$/, "").split("|").map(function (c) { return c.trim(); }); }
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const bm = line.match(/^ B(\d+) \s*$/);
+    if (bm) { closeAll(); html += blocks[+bm[1]]; continue; }
+    /* Tabelle: Zeile mit | und darauf eine Trennzeile |---|---| */
+    if (line.indexOf("|") !== -1 && i + 1 < lines.length && lines[i + 1].indexOf("|") !== -1 && isSep(lines[i + 1])) {
+      closeAll();
+      const head = cells(line);
+      let tbl = '<table class="md-table"><thead><tr>' + head.map(function (c) { return "<th>" + inline(c) + "</th>"; }).join("") + "</tr></thead><tbody>";
+      i += 2;
+      while (i < lines.length && lines[i].indexOf("|") !== -1 && lines[i].trim() !== "") {
+        tbl += "<tr>" + cells(lines[i]).map(function (c) { return "<td>" + inline(c) + "</td>"; }).join("") + "</tr>";
+        i++;
+      }
+      i--;
+      html += tbl + "</tbody></table>";
+      continue;
+    }
+    const bqm = line.match(/^\s*&gt;\s?(.*)$/);   // '>' wurde zu &gt; escaped
+    if (bqm) { flushPara(); closeList(); bq.push(bqm[1].replace(/^\[!\w+\][-+]?\s*/, "")); continue; }
+    const h = line.match(/^(#{1,6})\s+(.*)$/);
+    if (h) { closeAll(); const lvl = Math.min(h[1].length, 4); html += "<h" + lvl + ">" + inline(h[2]) + "</h" + lvl + ">"; continue; }
+    const li = line.match(/^\s*[-*]\s+(.*)$/);
+    if (li) { flushPara(); closeBq(); if (!inList) { html += "<ul>"; inList = true; } html += "<li>" + inline(li[1]) + "</li>"; continue; }
+    if (line.trim() === "") { closeAll(); continue; }
+    closeBq(); para.push(line);
+  }
+  closeAll();
+  return html.replace(/ B(\d+) /g, function (m, i) { return blocks[+i]; });
 }
 function noteHtml(n) {
   return looksLikeHtml(n.content) ? sanitizeHtml(n.content) : renderMarkdown(n.content);
@@ -1111,6 +1289,7 @@ function viewDashboard() {
     '<button class="card metric-card" onclick="go(\'todos\')"><span class="metric-label">Offene To-Dos</span><span class="metric-value">' + openTodos + "</span></button>" +
     '<button class="card metric-card" onclick="go(\'notes\')"><span class="metric-label">Notizen gesamt</span><span class="metric-value">' + state.notes.length + "</span></button>" +
     '<button class="card metric-card" onclick="go(\'code\')"><span class="metric-label">Code-Snippets</span><span class="metric-value">' + state.snippets.length + "</span></button>" +
+    '<button class="card metric-card" onclick="go(\'prog\')"><span class="metric-label">Coding-Level</span><span class="metric-value accent">' + progLevel(progXP()).level + '<span class="unit">' + progStats().solved + "/" + progStats().total + " gelöst</span></span></button>" +
     "</div>";
 
   html += '<div class="section-h"><span>Prüfungs-Countdown</span></div>';
@@ -1447,6 +1626,296 @@ function viewCode() {
   return html;
 }
 
+/* ============ Prog Aufgaben (Aufgabenblätter + Code-Lösungen + Level) ============ */
+function diffColorVar(d) { return d === "green" ? "var(--green)" : d === "orange" ? "var(--amber)" : "var(--red)"; }
+function progXP() {
+  return state.progtasks.reduce(function (sum, t) {
+    return sum + (t.status === "geloest" ? (DIFF_XP[t.difficulty] || 10) : 0);
+  }, 0);
+}
+function progLevel(xp) {
+  const level = Math.floor(xp / XP_PER_LEVEL) + 1;
+  const into = xp - (level - 1) * XP_PER_LEVEL;
+  return { level: level, into: into, need: XP_PER_LEVEL, pct: Math.round(into / XP_PER_LEVEL * 100) };
+}
+function progStats() {
+  const total = state.progtasks.length;
+  const solved = state.progtasks.filter(function (t) { return t.status === "geloest"; }).length;
+  const ms = state.progtasks.filter(function (t) { return t.status === "geloest" && t.mastery > 0; }).map(function (t) { return t.mastery; });
+  const avg = ms.length ? ms.reduce(function (a, b) { return a + b; }, 0) / ms.length : 0;
+  return { total: total, solved: solved, xp: progXP(), avgMastery: avg };
+}
+function sortedProg() {
+  return state.progtasks.slice().sort(function (a, b) {
+    const na = parseInt(a.nr, 10), nb = parseInt(b.nr, 10);
+    if (!isNaN(na) && !isNaN(nb) && na !== nb) return na - nb;
+    return String(a.nr).localeCompare(String(b.nr));
+  });
+}
+
+function viewProg() {
+  const q = state.progSearch.toLowerCase();
+  const tasks = sortedProg().filter(function (t) {
+    return !q || (t.title + " " + t.konzept + " Blatt " + t.nr).toLowerCase().includes(q) || (t.code || "").toLowerCase().includes(q);
+  });
+  const st = progStats();
+  const lv = progLevel(st.xp);
+
+  let html = '<h1 class="page-title">Prog Aufgaben</h1>' +
+    '<p class="page-sub">Aufgabenblätter, deine verbesserten Code-Lösungen und dein Lern-Fortschritt beim Programmieren.</p>';
+
+  /* --- Level- / Fortschritts-Karte --- */
+  html += '<div class="card level-card">' +
+    '<div class="level-badge"><b>' + lv.level + "</b><small>Level</small></div>" +
+    '<div class="level-main">' +
+      '<div class="level-top"><b>Coding-Level ' + lv.level + "</b><span>" + lv.into + " / " + lv.need + " XP</span></div>" +
+      '<div class="xp-track"><div class="xp-fill" style="width:' + lv.pct + '%"></div></div>' +
+      '<p style="font-size:0.74rem;color:var(--muted);margin-top:0.4rem;">Noch ' + (lv.need - lv.into) + " XP bis Level " + (lv.level + 1) + " · Gelöste Aufgaben geben XP je nach Schwierigkeit (🟢 10 · 🟠 20 · 🔴 30)</p>" +
+    "</div>" +
+    '<div class="level-stats">' +
+      '<div class="level-stat"><b>' + st.solved + "/" + st.total + "</b><small>gelöst</small></div>" +
+      '<div class="level-stat"><b>' + st.xp + "</b><small>XP</small></div>" +
+      '<div class="level-stat"><b>' + (st.avgMastery ? st.avgMastery.toFixed(1) : "–") + '</b><small>Ø Meisterung</small></div>' +
+    "</div></div>";
+
+  html += '<input type="text" id="progSearch" class="search-bar" placeholder="Aufgabe suchen … (auch im Code)" value="' + esc(state.progSearch) + '" oninput="progSearchInput(this.value)">';
+  html += '<div style="margin-bottom:1.25rem;"><button class="btn primary" onclick="newProgTask()">+ Neue Aufgabe</button></div>';
+
+  if (state.progtasks.length === 0) {
+    html += emptyState("Noch keine Aufgaben. Lege mit „+ Neue Aufgabe“ dein erstes Aufgabenblatt an.");
+  } else if (tasks.length === 0) {
+    html += emptyState("Nichts gefunden. Anderen Suchbegriff probieren.");
+  } else {
+    html += tasks.map(progCard).join("");
+  }
+  return html;
+}
+
+function progCard(t) {
+  const col = diffColorVar(t.difficulty);
+  const statusBadge = PROG_STATUS_BADGE[t.status] || "";
+  const open = !!state.progOpen[t.id];
+  const chevron = '<svg class="prog-chevron" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"></path></svg>';
+
+  /* Kopf: klickbar zum Auf-/Zuklappen; Aktionen daneben */
+  let h = '<div class="card prog-card' + (open ? " open" : "") + '" style="--diff:' + col + '">' +
+    '<div class="prog-head">' +
+      '<button class="prog-toggle" onclick="toggleProg(\'' + t.id + '\')" aria-expanded="' + open + '" title="Aufgabe auf-/zuklappen">' +
+        chevron +
+        '<span class="prog-nr">Blatt ' + esc(t.nr) + "</span>" +
+        '<span class="prog-title">' + esc(t.title) + "</span>" +
+        '<span class="badge ' + DIFF_BADGE[t.difficulty] + '">' + DIFF_DOT[t.difficulty] + " " + DIFF_LABELS[t.difficulty] + "</span>" +
+        '<span class="badge ' + statusBadge + '">' + PROG_STATUS[t.status] + "</span>" +
+      "</button>" +
+      '<button class="btn ghost" onclick="editProgTask(\'' + t.id + '\')">Bearbeiten</button>' +
+      '<button class="btn ghost" onclick="confirmAction(this,\'pt-' + t.id + '\',function(){deleteProgTask(\'' + t.id + '\')})">Löschen</button>' +
+    "</div>";
+
+  /* Zugeklappt: nur der Kopf */
+  if (!open) { return h + "</div>"; }
+
+  h += '<div class="prog-body">';
+  if (t.konzept) { h += '<div class="prog-row"><span class="prog-label">Konzept</span> ' + esc(t.konzept) + "</div>"; }
+
+  /* Status setzen + Meisterung (wie gut gelöst) */
+  h += '<div class="prog-row"><span class="prog-label">Status</span>' +
+    Object.keys(PROG_STATUS).map(function (k) {
+      const active = t.status === k;
+      return '<button class="pill" style="' + (active ? "background:var(--accent-dim);color:var(--accent);border-color:var(--accent);" : "background:var(--surface-2);color:var(--muted);") +
+        '" onclick="setProgStatus(\'' + t.id + '\',\'' + k + '\')">' + PROG_STATUS[k] + "</button>";
+    }).join("") + "</div>";
+
+  h += '<div class="prog-row"><span class="prog-label">Wie gut gelöst?</span><span class="stars">' +
+    [1, 2, 3, 4, 5].map(function (n) {
+      return '<button class="star ' + (n <= (t.mastery || 0) ? "on" : "") + '" title="' + n + ' von 5" onclick="setProgMastery(\'' + t.id + '\',' + n + ')">★</button>';
+    }).join("") + "</span></div>";
+
+  /* Aufgabenblatt */
+  h += '<input type="file" id="sheetFile-' + t.id + '" accept=".md,.markdown,.txt,text/*" style="display:none;" onchange="onProgFile(event,\'' + t.id + '\',\'sheet\')">';
+  h += '<div class="prog-row"><span class="prog-label">Aufgabenblatt</span>';
+  if (t.sheet) {
+    h += "<span>" + esc(t.sheet.name || (t.title + ".md")) + "</span>" +
+      '<button class="btn ghost" onclick="openProgSheet(\'' + t.id + '\')">Ansehen</button>' +
+      '<button class="btn ghost" onclick="document.getElementById(\'sheetFile-' + t.id + '\').click()">Ersetzen</button>';
+  } else {
+    h += '<button class="btn" onclick="document.getElementById(\'sheetFile-' + t.id + '\').click()" title="Markdown-/Textdatei hochladen">Aufgabenblatt hochladen</button>';
+  }
+  h += "</div>";
+
+  /* Code-Lösung */
+  h += '<input type="file" id="codeFileP-' + t.id + '" accept=".java,.sql,.py,.sh,.bash,.txt,text/*" style="display:none;" onchange="onProgFile(event,\'' + t.id + '\',\'code\')">';
+  const codeName = t.title.replace(/\s+/g, "") + langExt(t.codeLang);
+  h += '<div class="prog-row" style="justify-content:space-between;"><span class="prog-label">Code-Lösung — ' + esc(codeName) + "</span>" +
+    "<span>" +
+      '<button class="btn ghost" onclick="editProgTask(\'' + t.id + '\')">' + (t.code ? "Bearbeiten" : "Code eingeben") + "</button>" +
+      '<button class="btn ghost" onclick="document.getElementById(\'codeFileP-' + t.id + '\').click()">Datei hochladen</button>' +
+    "</span></div>";
+  if (t.code) {
+    h += '<div class="snippet-pre"><button class="copy-btn" onclick="copyProgCode(this,\'' + t.id + '\')">Kopieren</button>' +
+      "<pre><code>" + esc(t.code) + "</code></pre></div>";
+  } else {
+    h += '<p style="font-size:0.82rem;color:var(--muted);">Noch kein Code hinterlegt.</p>';
+  }
+
+  /* Kommentare UNTER dem Code — für Verbesserungen & Fragen (ändern nie den Code selbst) */
+  h += '<div class="comments">';
+  h += '<span class="prog-label">Kommentare & Fragen</span>';
+  (t.comments || []).forEach(function (c) {
+    const who = c.role === "coach" ? "coach" : "ich";
+    const label = c.role === "coach" ? "Coach" : "Ich";
+    h += '<div class="comment"><span class="who ' + who + '">' + label + "</span>" +
+      '<div class="comment-body"><div class="txt">' + esc(c.text) + "</div>" +
+      '<div class="comment-meta">' + fmtDateTime(c.createdAt) + ' · <button class="btn ghost" style="font-size:0.66rem;padding:0 0.3rem;" onclick="deleteProgComment(\'' + t.id + '\',\'' + c.id + '\')">löschen</button></div></div></div>';
+  });
+  h += '<div class="comment-add"><textarea id="commentInput-' + t.id + '" placeholder="Verbesserung notieren oder Frage stellen …"></textarea>' +
+    '<button class="btn primary" onclick="addProgComment(\'' + t.id + '\')">Senden</button></div>';
+  h += "</div>";        // .comments
+
+  h += "</div>";        // .prog-body
+  h += "</div>";        // .card
+  return h;
+}
+function toggleProg(id) {
+  if (state.progOpen[id]) { delete state.progOpen[id]; }
+  else { state.progOpen[id] = true; }
+  render();
+}
+
+function langExt(lang) {
+  const m = { Java: ".java", SQL: ".sql", Python: ".py", Bash: ".sh", Other: ".txt" };
+  return m[lang] || ".txt";
+}
+
+/* ---- Aktionen: Prog Aufgaben ---- */
+function progSearchInput(v) {
+  state.progSearch = v;
+  const pos = document.getElementById("progSearch").selectionStart;
+  state.focusTarget = "progSearch";
+  render();
+  const el = document.getElementById("progSearch");
+  if (el) { el.setSelectionRange(pos, pos); }
+}
+function setProgStatus(id, status) {
+  const t = state.progtasks.find(function (x) { return x.id === id; });
+  if (!t) return;
+  t.status = status;
+  t.updatedAt = Date.now();
+  persist();
+  render();
+}
+function setProgMastery(id, n) {
+  const t = state.progtasks.find(function (x) { return x.id === id; });
+  if (!t) return;
+  t.mastery = (t.mastery === n) ? n - 1 : n;   // nochmal auf denselben Stern -> eins runter
+  t.updatedAt = Date.now();
+  persist();
+  render();
+}
+function newProgTask() {
+  state.editProgId = null;
+  state.modal = { type: "prog-edit" };
+  state.focusTarget = "progTitle";
+  render();
+}
+function editProgTask(id) {
+  state.editProgId = id;
+  state.modal = { type: "prog-edit" };
+  state.focusTarget = "progTitle";
+  render();
+}
+function saveProgTask(e) {
+  e.preventDefault();
+  const nr = document.getElementById("progNr").value.trim();
+  const title = document.getElementById("progTitle").value.trim();
+  const konzept = document.getElementById("progKonzept").value.trim();
+  const difficulty = document.getElementById("progDiff").value;
+  const status = document.getElementById("progStatusSel").value;
+  const codeLang = document.getElementById("progLang").value;
+  const code = document.getElementById("progCode").value;
+  if (!title) return;
+  if (state.editProgId) {
+    const t = state.progtasks.find(function (x) { return x.id === state.editProgId; });
+    if (t) {
+      t.nr = nr || t.nr; t.title = title; t.konzept = konzept;
+      t.difficulty = difficulty; t.status = status; t.codeLang = codeLang;
+      t.code = code; t.updatedAt = Date.now();
+    }
+  } else {
+    state.progtasks.push({
+      id: uid(), nr: nr || "–", title: title, konzept: konzept,
+      difficulty: difficulty, status: status, mastery: 0, codeLang: codeLang,
+      sheet: null, code: code, comments: [], updatedAt: Date.now()
+    });
+  }
+  state.modal = null;
+  state.editProgId = null;
+  persist();
+  render();
+}
+function deleteProgTask(id) {
+  state.progtasks = state.progtasks.filter(function (t) { return t.id !== id; });
+  if (state.modal && state.modal.id === id) { state.modal = null; }
+  persist();
+  render();
+}
+/* Datei hochladen (Aufgabenblatt oder Code) — Zeitstempel = jetzt */
+function onProgFile(e, id, kind) {
+  const file = e.target.files && e.target.files[0];
+  e.target.value = "";
+  if (!file) return;
+  file.text().then(function (text) {
+    const t = state.progtasks.find(function (x) { return x.id === id; });
+    if (!t) return;
+    if (kind === "sheet") {
+      t.sheet = { name: file.name, text: text };
+    } else {
+      t.code = text;
+      const ext = (file.name.match(/\.([^.]+)$/) || ["", ""])[1].toLowerCase();
+      const m = { java: "Java", sql: "SQL", py: "Python", sh: "Bash", bash: "Bash" };
+      t.codeLang = m[ext] || t.codeLang || "Java";
+    }
+    t.updatedAt = Date.now();
+    persist();
+    render();
+  }).catch(function () { alert("Datei konnte nicht gelesen werden (nur Text-/Markdown-Dateien)."); });
+}
+function openProgSheet(id) {
+  state.modal = { type: "prog-sheet", id: id };
+  render();
+}
+function copyProgCode(btn, id) {
+  const t = state.progtasks.find(function (x) { return x.id === id; });
+  if (!t) return;
+  function feedback() {
+    btn.textContent = "Kopiert!";
+    btn.style.color = "var(--green)";
+    setTimeout(function () { if (document.body.contains(btn)) { btn.textContent = "Kopieren"; btn.style.color = ""; } }, 1500);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(t.code).then(feedback, feedback);
+  } else { feedback(); }
+}
+function addProgComment(id) {
+  const el = document.getElementById("commentInput-" + id);
+  if (!el) return;
+  const text = el.value.trim();
+  if (!text) return;
+  const t = state.progtasks.find(function (x) { return x.id === id; });
+  if (!t) return;
+  if (!t.comments) { t.comments = []; }
+  t.comments.push({ id: uid(), text: text, role: "ich", createdAt: Date.now() });
+  t.updatedAt = Date.now();
+  persist();
+  render();
+}
+function deleteProgComment(taskId, commentId) {
+  const t = state.progtasks.find(function (x) { return x.id === taskId; });
+  if (!t || !t.comments) return;
+  t.comments = t.comments.filter(function (c) { return c.id !== commentId; });
+  persist();
+  render();
+}
+
 /* ============ Modal (Erstellen & Ansehen im Fenster) ============ */
 function modalHTML() {
   if (!state.modal) return "";
@@ -1505,10 +1974,56 @@ function modalHTML() {
       (s.description ? '<p style="font-size:0.88rem; color:var(--muted); margin-bottom:0.75rem;">' + esc(s.description) + "</p>" : "") +
       '<div class="snippet-pre"><button class="copy-btn" onclick="copySnippet(this,\'' + s.id + '\')">Kopieren</button>' +
       '<pre style="max-height:none;"><code>' + esc(s.code) + "</code></pre></div>";
+  } else if (t === "prog-edit") {
+    const ed = state.editProgId ? state.progtasks.find(function (x) { return x.id === state.editProgId; }) : null;
+    body = '<div class="modal-head"><span class="modal-title">' + (ed ? "Aufgabe bearbeiten" : "Neue Aufgabe") + "</span>" + xBtn + "</div>" +
+      '<form class="snippet-form" style="margin-bottom:0;" onsubmit="saveProgTask(event)">' +
+      '<div class="row"><input type="text" id="progNr" placeholder="Blatt-Nr, z. B. 05" style="flex:0 0 110px;min-width:80px;" value="' + (ed ? esc(ed.nr) : "") + '">' +
+      '<input type="text" id="progTitle" placeholder="Titel, z. B. Mini-Bundesliga" required value="' + (ed ? esc(ed.title) : "") + '"></div>' +
+      '<input type="text" id="progKonzept" placeholder="Konzept, z. B. HashMap / Comparable" value="' + (ed ? esc(ed.konzept || "") : "") + '">' +
+      '<div class="row"><select id="progDiff">' + DIFF_ORDER.map(function (d) {
+        return '<option value="' + d + '"' + ((ed ? ed.difficulty === d : d === "green") ? " selected" : "") + ">" + DIFF_DOT[d] + " " + DIFF_LABELS[d] + "</option>";
+      }).join("") + "</select>" +
+      '<select id="progStatusSel">' + Object.keys(PROG_STATUS).map(function (k) {
+        return '<option value="' + k + '"' + ((ed ? ed.status === k : k === "offen") ? " selected" : "") + ">" + PROG_STATUS[k] + "</option>";
+      }).join("") + "</select>" +
+      '<select id="progLang">' + PROG_LANGS.map(function (l) {
+        return "<option" + (ed && ed.codeLang === l ? " selected" : "") + ">" + l + "</option>";
+      }).join("") + "</select></div>" +
+      '<textarea id="progCode" placeholder="Verbesserter Code (optional — kann auch als Datei hochgeladen werden) …">' + (ed ? esc(ed.code || "") : "") + "</textarea>" +
+      '<div class="form-actions"><button type="submit" class="btn primary">' + (ed ? "Aktualisieren" : "Speichern") + "</button>" +
+      '<button type="button" class="btn ghost" onclick="closeModal()">Abbrechen</button></div></form>';
+  } else if (t === "prog-sheet") {
+    const tk = state.progtasks.find(function (x) { return x.id === state.modal.id; });
+    if (!tk || !tk.sheet) return "";
+    const split = !!state.modal.split;
+    const splitBtn = '<button type="button" class="btn ghost modal-x" onclick="toggleSheetSplit()" aria-label="Geteilte Ansicht" title="' +
+      (split ? "Geteilte Ansicht schließen" : "Neben dem Code anzeigen (geteilte Ansicht)") + '">' + (split ? "⧉" : "⤢") + "</button>";
+    const head = '<div class="modal-head"><div><span class="prog-nr">Aufgabenblatt · Blatt ' + esc(tk.nr) + "</span>" +
+      '<h2 class="modal-title">' + esc(tk.sheet.name || tk.title) + '</h2></div><div class="note-actions">' + splitBtn + xBtn + "</div></div>";
+    const sheet = '<div class="md-view">' + renderSheet(tk.sheet.text || "") + "</div>";
+    if (split) {
+      const codePane = tk.code
+        ? '<div class="snippet-pre"><button class="copy-btn" onclick="copyProgCode(this,\'' + tk.id + '\')">Kopieren</button><pre style="max-height:none;"><code>' + esc(tk.code) + "</code></pre></div>"
+        : '<p style="color:var(--muted);font-size:0.85rem;">Für diese Aufgabe ist noch kein Code hinterlegt.</p>';
+      body = head + '<div class="split-grid">' +
+        '<div class="split-pane"><div class="split-pane-label">Aufgabenstellung</div>' + sheet + "</div>" +
+        '<div class="split-pane"><div class="split-pane-label">Code-Lösung — ' + esc(tk.title.replace(/\s+/g, "") + langExt(tk.codeLang)) + "</div>" + codePane + "</div>" +
+        "</div>";
+    } else {
+      body = head + sheet;
+    }
   }
 
+  const modalCls = (state.modal.type === "prog-sheet" && state.modal.split) ? "modal split" : "modal wide";
   return '<div class="modal-overlay" onmousedown="overlayDown(event)" onclick="overlayClick(event)">' +
-    '<div class="modal wide" role="dialog" aria-modal="true">' + body + "</div></div>";
+    '<div class="' + modalCls + '" role="dialog" aria-modal="true">' + body + "</div></div>";
+}
+function toggleSheetSplit() {
+  if (state.modal && state.modal.type === "prog-sheet") {
+    state.modal.split = !state.modal.split;
+    render();
+  }
 }
 
 let overlayDownOnSelf = false;
@@ -1593,7 +2108,8 @@ function exportBackup() {
     exams: state.exams,
     todos: state.todos,
     notes: state.notes,
-    snippets: state.snippets
+    snippets: state.snippets,
+    progtasks: state.progtasks
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -1625,6 +2141,7 @@ function applyImport() {
   state.todos = arr(p.todos);
   state.notes = arr(p.notes);
   state.snippets = arr(p.snippets);
+  state.progtasks = arr(p.progtasks);
   state.pendingImport = null;
   state.selectedNoteId = null;
   state.modal = null;
@@ -1633,8 +2150,8 @@ function applyImport() {
 }
 
 /* ============ Render ============ */
-const VIEWS = { dashboard: viewDashboard, exams: viewExams, todos: viewTodos, notes: viewNotes, code: viewCode, legal: viewLegal };
-const VIEW_LABELS = { dashboard: "Dashboard", exams: "Prüfungen", todos: "To-Dos", notes: "Notizen", code: "Code-Snippets", legal: "Impressum" };
+const VIEWS = { dashboard: viewDashboard, exams: viewExams, todos: viewTodos, notes: viewNotes, code: viewCode, prog: viewProg, legal: viewLegal };
+const VIEW_LABELS = { dashboard: "Dashboard", exams: "Prüfungen", todos: "To-Dos", notes: "Notizen", code: "Code-Snippets", prog: "Prog Aufgaben", legal: "Impressum" };
 
 function applyLayout() {
   const main = document.getElementById("main");
@@ -1671,6 +2188,16 @@ function render() {
     if (el) { el.focus(); }
     state.focusTarget = null;
   }
+  renderMermaid();
+}
+
+/* Mermaid-UML in Aufgabenblättern zeichnen (Bibliothek wird als ESM-Modul geladen). */
+function renderMermaid() {
+  if (!window.__mermaid) { return; }   // noch nicht geladen -> Modul ruft renderMermaid() nach Init erneut
+  const nodes = document.querySelectorAll(".mermaid:not([data-processed])");
+  if (!nodes.length) { return; }
+  try { window.__mermaid.run({ nodes: nodes }); }
+  catch (e) { /* Diagramm fehlgeschlagen — Quelltext bleibt sichtbar */ }
 }
 
 function go(view) {
@@ -1954,6 +2481,22 @@ document.addEventListener("keydown", function (e) {
   if (e.key === "Escape" && state.modal) { closeModal(); }
 });
 render();
+</script>
+<!-- Mermaid als ESM-Modul (für echte UML-Klassendiagramme in den Aufgabenblättern) -->
+<script type="module">
+  try {
+    const mermaid = (await import("https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs")).default;
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "neutral",
+      securityLevel: "strict",
+      themeVariables: { fontFamily: "ui-monospace, Menlo, Consolas, monospace", fontSize: "13px" }
+    });
+    window.__mermaid = mermaid;
+    if (typeof window.renderMermaid === "function") { window.renderMermaid(); }
+  } catch (e) {
+    console.warn("[studyhub] Mermaid konnte nicht geladen werden (offline?). UML wird als Text angezeigt.", e);
+  }
 </script>
 </body>
 </html>
