@@ -840,6 +840,18 @@ if (localStorage.getItem("snippets") === null) {
 }
 const PROG_SEED = [
     {
+      id: "blatt-00", v: 1, nr: "Ü00", kategorie: "blatt", title: "Schachbrett & Datenanalyse", konzept: "Schleifen, Klasse mit Gettern und toString, double[], eigener Sortieralgorithmus",
+      difficulty: "green", status: "inArbeit", mastery: 0, codeLang: "Java",
+      sheet: { name: "Uebungsblatt00_Schachbrett_Datenanalyse.md", text: "# Übungsblatt 00 — Schachbrett & Datenanalyse\n\n**Schwierigkeit:** 🟢 leicht  ·  **Konzept:** verschachtelte Schleifen, Klasse mit Gettern und toString, double[], eigener Sortieralgorithmus  ·  **Quelle:** offizielles Übungsblatt aus dem Moodle-Kurs (exercise00.pdf)\n\n## Worum geht's?\nDas erste Blatt wiederholt die Grundlagen aus Prog 1. In Aufgabe 01 baust du mit **zwei verschachtelten Schleifen** einen String zusammen. In Aufgabe 02 entsteht eine kleine **Analyse-Bibliothek**: Eine Klasse rechnet Kennzahlen eines `double[]` aus, eine zweite **kapselt** das Ergebnis mit privaten Feldern, Gettern und `toString()`. Zum Schluss sortierst du ein Array mit einem **eigenen Algorithmus**. `Arrays.sort` ist verboten.\n\n## Projekt einrichten\n- `sheet00.zip` aus Moodle importieren (*File → Import → General → Existing Projects into Workspace → Select archive file*). Im Vault liegt die Datei unter `Programmierung 2/quellen/uebung/Übung 00/`.\n- Pakete: `de.tha.prog2.task01` mit `Task01` und `Task01Test`, `de.tha.prog2.task02` mit drei Tests. `AnalysisResult` und `DataAnalyzer` legst du selbst an.\n\n## Klassendiagramm — bau genau das nach\n```mermaid\nclassDiagram\n    class Task01 {\n        +createChessBoard(int row, int col) String$\n    }\n    class AnalysisResult {\n        -double min\n        -double max\n        -double sum\n        -double mean\n        -double sampleVariance\n        +AnalysisResult(double min, double max, double sum, double mean, double sampleVariance)\n        +getMin() double\n        +getMax() double\n        +getSum() double\n        +getMean() double\n        +getSampleVariance() double\n        +toString() String\n    }\n    class DataAnalyzer {\n        +min(double[] values) double\n        +max(double[] values) double\n        +sum(double[] values) double\n        +mean(double[] values) double\n        +sampleVariance(double[] values) double\n        +analyze(double[] values) AnalysisResult\n        +sort(double[] values, boolean desc) void\n    }\n    DataAnalyzer ..> AnalysisResult : erzeugt\n```\n\n## Deine Aufgaben\n**Aufgabe 01 · Schachbrettmuster:** `Task01.createChessBoard(int row, int col)` liefert ein Muster aus X und O im Wechsel, jede Zeile endet mit einem Zeilenumbruch. Bei `row <= 0` oder `col <= 0` kommt ein leerer String zurück.\n\n**Aufgabe 02 · Datenanalyse**\n- **(a)** `AnalysisResult` mit den fünf privaten Feldern, einem Konstruktor, fünf Gettern und `toString()` mit **einer Nachkommastelle**.\n- **(b)** `DataAnalyzer` berechnet `min`, `max`, `sum`, `mean` und die Stichprobenvarianz s² = 1/(n−1) · Σ (xᵢ − x̄)². `analyze` ruft die Einzelmethoden auf und gibt ein `AnalysisResult` zurück.\n- **(c)** `sort(double[] values, boolean desc)` sortiert das Array selbst (z. B. mit SelectionSort), bei `desc == true` absteigend. **Kein `Arrays.sort`.**\n\n## Erwartete Ausgabe\n`createChessBoard(5, 5)`:\n```\nX O X O X\nO X O X O\nX O X O X\nO X O X O\nX O X O X\n```\n`toString()` von `AnalysisResult`:\n```\nAnalysisResult{min=1.0, max=10.0, sum=30.0, mean=6.0, sampleVariance=8.0}\n```\n**Fertig** bist du, wenn alle Tests der Vorlage grün sind.\n\n> ⚠️ **Falle (geprüft):** `String.format(\"%.1f\", x)` schreibt auf einem deutschen System `1,0` statt `1.0`. Der Test erwartet den Punkt.\n\n> 💡 **Varianz:** durch n − 1 teilen, nicht durch n.\n" },
+      code: "", comments: [], updatedAt: new Date("2026-10-19T10:00:00").getTime()
+    },
+    {
+      id: "blatt-01", v: 1, nr: "Ü01", kategorie: "blatt", title: "Flughafenpersonal & Flughafenverwaltung", konzept: "Abstrakte Klasse, Vererbung, Enum mit Feld, verkettete Liste",
+      difficulty: "orange", status: "offen", mastery: 0, codeLang: "Java",
+      sheet: { name: "Uebungsblatt01_Flughafen.md", text: "# Übungsblatt 01 — Flughafenpersonal & Flughafenverwaltung\n\n**Schwierigkeit:** 🟠 mittel  ·  **Konzept:** abstrakte Klasse, Vererbung, Enum mit Feld, verkettete Liste  ·  **Quelle:** offizielles Übungsblatt aus dem Moodle-Kurs (exercise01.pdf)\n\n## Worum geht's?\nEin Flughafen hat drei Sorten Personal: Flugbegleitung, Piloten und Bodenpersonal. Alle haben eine Personalnummer, einen Namen und ein Grundgehalt. Das steht genau einmal in der **abstrakten Oberklasse** `Employee`. Befördert wird aber je Rolle anders: Flugbegleiter einmal, Piloten über Ränge, Bodenpersonal in Stufen. Deshalb ist `promote()` **abstrakt**, und jede Subklasse schreibt ihre eigene Version. Ränge und Abteilungen sind feste Wertelisten mit einem Gehalt pro Wert, also ein **Enum mit Feld und Konstruktor**.\n\nIn Aufgabe 02 verwaltest du das Personal **ohne `ArrayList`**: Du baust selbst eine einfach verkettete Liste, die immer nach Personalnummer sortiert bleibt.\n\n## Projekt einrichten\n- `sheet01.zip` aus Moodle in Eclipse importieren: *File → Import → General → Existing Projects into Workspace → Select archive file*. Im Vault liegt die Datei unter `Programmierung 2/quellen/uebung/Übung 01/`.\n- Die Vorlage enthält **nur die JUnit-Tests**. Pakete und Namen müssen exakt passen: `de.tha.prog2.airport.staff` für Aufgabe 01, `de.tha.prog2.airport.management` für Aufgabe 02.\n\n## Klassendiagramm — bau genau das nach\n```mermaid\nclassDiagram\n    class Employee {\n        <<abstract>>\n        #int employeeId\n        #double baseSalary\n        #String firstName\n        #String lastName\n        -int nextEmployeeId$\n        +Employee(String lastName, String firstName, double baseSalary)\n        +toString() String\n        +getEmployeeId() int\n        +promote() void*\n        +calculateSalary() double\n    }\n    class FlightAttendant {\n        -boolean isLeadAttendant\n        +FlightAttendant(String lastName, String firstName)\n        +promote() void\n        +calculateSalary() double\n    }\n    class Pilot {\n        -Rank rank\n        +Pilot(String lastName, String firstName, Rank rank)\n        +promote() void\n        +calculateSalary() double\n    }\n    class GroundStaff {\n        -int level\n        -Department department\n        -int overtimeHours\n        +GroundStaff(String lastName, String firstName, Department department)\n        +calculateSalary() double\n        +changeDepartment(Department department) void\n        +addExtraTime() void\n        +addExtraTime(int hours) void\n        +promote() void\n    }\n    class Rank {\n        <<enumeration>>\n        COPILOT\n        FIRST_OFFICER\n        CAPTAIN\n        -double baseSalary\n        +getBaseSalary() double\n    }\n    class Department {\n        <<enumeration>>\n        CHECK_IN\n        SECURITY\n        HANDLING\n        TECHNICAL\n        -double baseSalary\n        +getBaseSalary() double\n    }\n    class EmployeeList {\n        +add(Employee employee) void\n        +remove(int employeeId) void\n        +getPilots() EmployeeList\n        +getGroundStaff() EmployeeList\n        +getFlightAttendants() EmployeeList\n        +toString() String\n    }\n    class ListNode {\n        -Employee employee\n        -ListNode next\n    }\n    Employee <|-- FlightAttendant\n    Employee <|-- Pilot\n    Employee <|-- GroundStaff\n    Pilot --> Rank : uses\n    GroundStaff --> Department : uses\n    EmployeeList --> \"*\" ListNode : manages\n    ListNode --> \"1\" Employee : contains\n```\n\n## Deine Aufgaben\n### Aufgabe 01 · Flughafenpersonal\n**(a) `Employee`**: Die Personalnummer wird automatisch vergeben, laufend ab 1 (statischer Zähler). `calculateSalary()` gibt das Gehalt zurück. `toString()` liefert genau:\n```\nEmployee{id=1, lastName=Mustermann, firstName=Max, baseSalary=3500.0}\n```\n**(b) `FlightAttendant`**: startet mit 3.500 €. Es gibt genau eine Beförderung: +15 %, also 4.025 €.\n\n**(c) `Pilot` + Enum `Rank`**: `COPILOT` 5.000 €, `FIRST_OFFICER` 7.000 €, `CAPTAIN` 9.000 €. Jede Beförderung hebt um einen Rang, das Gehalt kommt nur aus dem Rang.\n\n**(d) `GroundStaff` + Enum `Department`**: `CHECK_IN` 2.800 €, `SECURITY` 3.200 €, `HANDLING` 3.000 €, `TECHNICAL` 3.500 €. Höchstens 3 Beförderungen, jede bringt +5 %. `addExtraTime()` zählt 1 Überstunde, `addExtraTime(int hours)` entsprechend viele. Gehalt = `baseSalary + baseSalary · overtimeHours / 160`. `changeDepartment(...)` setzt die Stufe auf 0 und das Grundgehalt auf das der neuen Abteilung. Die Überstunden bleiben.\n\n### Aufgabe 02 · Flughafenverwaltung\n**(a)** `EmployeeList` merkt sich den Listenanfang. `ListNode` ist nicht `public`, steht in `EmployeeList.java` und hält einen `Employee` und den Nachfolger. **Keine Collection-API.**\n**(b)** `add(Employee)` fügt sortiert nach Personalnummer ein: in die leere Liste, vorne, in der Mitte, am Ende.\n**(c)** `remove(int employeeId)` entfernt das erste passende Element. Eine unbekannte Nummer ändert nichts.\n**(d)** `getPilots()`, `getGroundStaff()`, `getFlightAttendants()` liefern per `instanceof` jeweils eine **neue** sortierte Liste. Die Originalliste bleibt unverändert.\n**(e)** `toString()` gibt einen `Employee` pro Zeile aus, **ohne** Zeilenumbruch am Ende.\n\n## Erwartete Ausgabe\nDie Konsolenmeldungen müssen exakt so aussehen:\n```\nMax Mustermann promoted to lead flight attendant.\nMax Mustermann is already a lead flight attendant.\nMax Mustermann promoted to FIRST_OFFICER.\nMax Mustermann is already at highest rank.\nMax Mustermann promoted to level 2.\nMax Mustermann cannot be promoted further.\nMax Mustermann changed department from CHECK_IN to SECURITY.\n```\nBeispiel für `toString()` der Liste:\n```\nEmployee{id=1, lastName=Mustermann, firstName=Max, baseSalary=3500.0}\nEmployee{id=2, lastName=Schmidt, firstName=Anna, baseSalary=5000.0}\nEmployee{id=5, lastName=Klein, firstName=Tom, baseSalary=3200.0}\n```\n**Fertig** bist du, wenn alle 25 Tests der Vorlage grün sind.\n\n> ⚠️ **Falle (geprüft):** Startest du alle Tests auf einmal, scheitern 2 Tests in `EmployeeTest` (`expected: <1> but was: <33>`), obwohl dein Code stimmt. Der statische Zähler läuft über alle Testklassen weiter. Starte `EmployeeTest` deshalb einzeln.\n\n> ⚠️ **Falle:** `baseSalary * (overtimeHours / 160)` ist eine Ganzzahldivision und ergibt keinen Zuschlag. Erst multiplizieren, dann teilen.\n\n> 💡 **Klausur:** Für nicht kompilierende Aufgaben gibt es 0 Punkte (Deckblatt der Probeklausur SoSe26). Nach jedem Schritt kompilieren und testen.\n" },
+      code: "", comments: [], updatedAt: new Date("2026-10-19T10:00:00").getTime()
+    },
+    {
       id: "seed-00", v: 2, nr: "00", title: "Spielkarte (Wiedereinstieg)", konzept: "Klasse, Konstruktor, Getter, ArrayList",
       difficulty: "green", status: "geloest", mastery: 2, codeLang: "Java",
       sheet: { name: "Aufgabe00_Spielkarte.md", text: "# Aufgabe 00 — Spielkarte (Wiedereinstieg)\n\n**Schwierigkeit:** 🟢 leicht  ·  **Konzept:** Klasse, Konstruktor, Getter, toString, ArrayList  ·  **Modul:** M0\n\n## Worum geht's?\nZum Wiederreinkommen: eine einzige kleine Klasse und ein `main`. Du baust eine **Spielkarte** mit Farbe, Rang und Punktwert, legst drei Karten in eine `ArrayList` und rechnest ihren Gesamtwert aus.\n\nDas ist mit Absicht der Anfang von **Aufgabe 01 „Blackjack“ aus der Klausur SoSe26 (09.07.2026)**. Dort ist die Karte die Klasse `Card`, Konstruktor, Getter und `toString` waren 3 Punkte. Hier noch ganz ohne Enums und ohne `Comparable`. Die kommen in den nächsten Schritten.\n\n## Klassendiagramm — bau genau das nach\n\n```mermaid\nclassDiagram\n    class Karte {\n        -String farbe\n        -String rang\n        -int wert\n        +Karte(String farbe, String rang, int wert)\n        +getFarbe() String\n        +getRang() String\n        +getWert() int\n        +toString() String\n    }\n    class Main {\n        +main(String[] args) void\n        +summe(List~Karte~ karten) int\n    }\n    Main ..> Karte : benutzt\n```\n\n## Deine Aufgaben\n- **(a) Klasse `Karte`**: drei **private** Felder, ein Konstruktor, der alle drei setzt (`this.farbe = farbe;` …), und drei Getter.\n- **(b) `toString()` überschreiben**: Rang direkt gefolgt von der Farbe, ohne Leerzeichen. Herz 10 → `10♥` (genau wie in der Klausur). Denk an `@Override`.\n- **(c) `main`**: eine `ArrayList<Karte>` anlegen und diese drei Karten einfügen:\n  - `new Karte(\"♠\", \"A\", 11)`\n  - `new Karte(\"♥\", \"K\", 10)`\n  - `new Karte(\"♣\", \"7\", 7)`\n\n  Dann mit einer **for-each-Schleife** jede Karte in eine eigene Zeile ausgeben (`System.out.println(k)` ruft automatisch `toString()` auf).\n- **(d) `static int summe(List<Karte> karten)`**: addiert die Werte aller Karten und gibt die Summe zurück. In `main` ausgeben: `Summe: 28`.\n- **(e)** Ist die Summe **größer als 21**, zusätzlich `Ueber 21!` ausgeben, sonst `Passt.`\n\n**Namen genau wie im Diagramm** (Paket `aufgabe00`).\n\n> 💡 **Zeigt Eclipse statt ♠ ♥ ♣ nur Fragezeichen?** Window → Preferences → General → Workspace → *Text file encoding* auf **UTF-8** stellen.\n\n> ⚠️ **Klausurfalle:** Nicht kompilierender Code = **0 Punkte**, auch wenn fast alles richtig ist. Gewöhn dir an, nach jeder Teilaufgabe einmal laufen zu lassen.\n\n## Erwartete Ausgabe\n```\nA♠\nK♥\n7♣\nSumme: 28\nUeber 21!\n```" },
@@ -1006,6 +1018,7 @@ const PROG_SEED = [
   PROG_SEED.forEach(function (seed) {
     const cur = stored.find(function (t) { return t.nr === seed.nr; });
     if (!cur) { stored.push(seed); changed = true; return; }
+    if (seed.kategorie && cur.kategorie !== seed.kategorie) { cur.kategorie = seed.kategorie; changed = true; }
     if ((cur.v || 0) < (seed.v || 0)) {
       cur.title = seed.title; cur.konzept = seed.konzept; cur.difficulty = seed.difficulty;
       cur.sheet = seed.sheet; cur.codeLang = seed.codeLang; cur.v = seed.v;
@@ -1040,6 +1053,7 @@ const state = {
   langFilter: "Alle",
   snippetSearch: "",
   progSearch: "",
+  progKat: load("progKat", "blatt"),
   editProgId: null,
   progUpload: null,
   progOpen: {},
@@ -1818,7 +1832,8 @@ function sortedProg() {
 function viewProg() {
   const q = state.progSearch.toLowerCase();
   const tasks = sortedProg().filter(function (t) {
-    return !q || (t.title + " " + t.konzept + " Blatt " + t.nr).toLowerCase().includes(q) || (t.code || "").toLowerCase().includes(q);
+    if (progKat(t) !== state.progKat) return false;
+    return !q || (t.title + " " + t.konzept + " " + progLabel(t)).toLowerCase().includes(q) || (t.code || "").toLowerCase().includes(q);
   });
   const st = progStats();
   const lv = progLevel(st.xp);
@@ -1840,13 +1855,24 @@ function viewProg() {
       '<div class="level-stat"><b>' + (st.avgMastery ? st.avgMastery.toFixed(1) : "–") + '</b><small>Ø Meisterung</small></div>' +
     "</div></div>";
 
+  /* --- Unterreiter: offizielle Übungsblätter | selbst erstellte Aufgaben --- */
+  const nBlatt = state.progtasks.filter(function (t) { return progKat(t) === "blatt"; }).length;
+  const KATS = [["blatt", "📘 Prog2 Übungsblätter", nBlatt], ["eigen", "🛠️ Selbsterstellte Aufgaben", state.progtasks.length - nBlatt]];
+  html += '<div class="prog-row" style="gap:0.5rem;flex-wrap:wrap;margin:0.25rem 0 0.4rem;">' + KATS.map(function (k) {
+    const active = state.progKat === k[0];
+    return '<button class="pill" style="' + (active ? "background:var(--accent-dim);color:var(--accent);border-color:var(--accent);" : "background:var(--surface-2);color:var(--muted);") +
+      '" onclick="setProgKat(\'' + k[0] + '\')">' + k[1] + " (" + k[2] + ")</button>";
+  }).join("") + "</div>";
+  html += '<p class="page-sub" style="margin-top:0;">' + (state.progKat === "blatt"
+    ? "Die offiziellen Übungsblätter aus dem Moodle-Kurs, mit Projektvorlage und JUnit-Tests."
+    : "Selbst erstellte Übungsaufgaben, zugeschnitten auf die Klausurthemen.") + "</p>";
   html += '<input type="text" id="progSearch" class="search-bar" placeholder="Aufgabe suchen … (auch im Code)" value="' + esc(state.progSearch) + '" oninput="progSearchInput(this.value)">';
   html += '<div style="margin-bottom:1.25rem;"><button class="btn primary" onclick="newProgTask()">+ Neue Aufgabe</button></div>';
 
   if (state.progtasks.length === 0) {
     html += emptyState("Noch keine Aufgaben. Lege mit „+ Neue Aufgabe“ dein erstes Aufgabenblatt an.");
   } else if (tasks.length === 0) {
-    html += emptyState("Nichts gefunden. Anderen Suchbegriff probieren.");
+    html += emptyState(q ? "Nichts gefunden. Anderen Suchbegriff probieren." : "Noch keine Aufgaben in diesem Bereich.");
   } else {
     html += tasks.map(progCard).join("");
   }
@@ -1864,7 +1890,7 @@ function progCard(t) {
     '<div class="prog-head">' +
       '<button class="prog-toggle" onclick="toggleProg(\'' + t.id + '\')" aria-expanded="' + open + '" title="Aufgabe auf-/zuklappen">' +
         chevron +
-        '<span class="prog-nr">Blatt ' + esc(t.nr) + "</span>" +
+        '<span class="prog-nr">' + esc(progLabel(t)) + "</span>" +
         '<span class="prog-title">' + esc(t.title) + "</span>" +
         '<span class="badge ' + DIFF_BADGE[t.difficulty] + '">' + DIFF_DOT[t.difficulty] + " " + DIFF_LABELS[t.difficulty] + "</span>" +
         '<span class="badge ' + statusBadge + '">' + PROG_STATUS[t.status] + "</span>" +
@@ -1938,6 +1964,9 @@ function progCard(t) {
   h += "</div>";        // .card
   return h;
 }
+function progKat(t) { return t.kategorie === "blatt" ? "blatt" : "eigen"; }
+function progLabel(t) { return progKat(t) === "blatt" ? "Übungsblatt " + String(t.nr).replace(/^Ü/, "") : "Aufgabe " + t.nr; }
+function setProgKat(k) { state.progKat = k; save("progKat", k); render(); }
 function toggleProg(id) {
   if (state.progOpen[id]) { delete state.progOpen[id]; }
   else { state.progOpen[id] = true; }
@@ -2005,7 +2034,7 @@ function saveProgTask(e) {
     }
   } else {
     state.progtasks.push({
-      id: uid(), nr: nr || "–", title: title, konzept: konzept,
+      id: uid(), nr: nr || "–", kategorie: state.progKat, title: title, konzept: konzept,
       difficulty: difficulty, status: status, mastery: 0, codeLang: codeLang,
       sheet: null, code: code, comments: [], updatedAt: Date.now()
     });
@@ -2162,7 +2191,7 @@ function modalHTML() {
     const split = !!state.modal.split;
     const splitBtn = '<button type="button" class="btn ghost modal-x" onclick="toggleSheetSplit()" aria-label="Geteilte Ansicht" title="' +
       (split ? "Geteilte Ansicht schließen" : "Neben dem Code anzeigen (geteilte Ansicht)") + '">' + (split ? "⧉" : "⤢") + "</button>";
-    const head = '<div class="modal-head"><div><span class="prog-nr">Aufgabenblatt · Blatt ' + esc(tk.nr) + "</span>" +
+    const head = '<div class="modal-head"><div><span class="prog-nr">Aufgabenblatt · ' + esc(progLabel(tk)) + "</span>" +
       '<h2 class="modal-title">' + esc(tk.sheet.name || tk.title) + '</h2></div><div class="note-actions">' + splitBtn + xBtn + "</div></div>";
     const sheet = '<div class="md-view">' + renderSheet(tk.sheet.text || "") + "</div>";
     if (split) {
